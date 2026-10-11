@@ -1,0 +1,9 @@
+{
+  "stage": "field_static_zero_only_run1_20261011",
+  "user_statement": "轮子和车体没动，无异常，位置和朝向一致",
+  "drive_wheels_or_body_motion_observed": false,
+  "abnormal_sound_observed": false,
+  "display_pose_and_heading_match_vehicle": true,
+  "observation_does_not_override_strict_stop_window": true,
+  "ground_navigation_acceptance": false
+}

@@ -1,0 +1,223 @@
+[sudo] password for ncut: /home/ncut/medical_clock_sync_20261011/chrony_3.2-4ubuntu4.5_amd64.deb: OK
+Unit chrony.service does not exist, proceeding anyway.
+Created symlink /etc/systemd/system/chrony.service → /dev/null.
+Selecting previously unselected package chrony.
+(Reading database ... 344840 files and directories currently installed.)
+Preparing to unpack .../chrony_3.2-4ubuntu4.5_amd64.deb ...
+Unpacking chrony (3.2-4ubuntu4.5) ...
+Setting up chrony (3.2-4ubuntu4.5) ...
+Creating '_chrony' system user/group for the chronyd daemon…
+
+Creating config file /etc/chrony/chrony.conf with new version
+
+Creating config file /etc/chrony/chrony.keys with new version
+Failed to preset unit: Unit file /etc/systemd/system/chrony.service is masked.
+/usr/bin/deb-systemd-helper: error: systemctl preset failed on chrony.service: No such file or directory
+Processing triggers for systemd (237-3ubuntu10.45) ...
+Processing triggers for ureadahead (0.100.0-21) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Removed /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service.
+Removed /etc/systemd/system/chrony.service.
+Synchronizing state of chrony.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable chrony
+Created symlink /etc/systemd/system/chronyd.service → /lib/systemd/system/chrony.service.
+● chrony.service - chrony, an NTP client/server
+   Loaded: loaded (/lib/systemd/system/chrony.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2026-10-11 18:06:51 CST; 3ms ago
+     Docs: man:chronyd(8)
+           man:chronyc(1)
+           man:chrony.conf(5)
+  Process: 11544 ExecStartPost=/usr/lib/chrony/chrony-helper update-daemon (code=exited, status=0/SUCCESS)
+  Process: 11537 ExecStart=/usr/lib/systemd/scripts/chronyd-starter.sh $DAEMON_OPTS (code=exited, status=0/SUCCESS)
+ Main PID: 11543 (chronyd)
+    Tasks: 1 (limit: 4627)
+   CGroup: /system.slice/chrony.service
+           └─11543 /usr/sbin/chronyd
+
+Oct 11 18:06:51 ubuntu systemd[1]: Starting chrony, an NTP client/server...
+Oct 11 18:06:51 ubuntu chronyd[11543]: chronyd version 3.2 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SECHASH +SIGND +ASYNCDNS +IPV6 -DEBUG)
+Oct 11 18:06:51 ubuntu systemd[1]: Started chrony, an NTP client/server.
+Reference ID    : 7F7F0101 ()
+Stratum         : 8
+Ref time (UTC)  : Sun Oct 11 10:06:50 2026
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 0.000000000 seconds
+Root dispersion : 0.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Normal
+210 Number of sources = 0
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current synced, '+' = combined , '-' = not combined,
+| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+MEDICAL_CHRONY_INSTALLED_vm
+Traceback (most recent call last):
+  File "/home/ncut/medical_clock_sync_20261011/vm_install_medical_clock_20261011.py", line 54, in <module>
+    look_for_keys=False, allow_agent=False, timeout=8)
+  File "/usr/lib/python2.7/dist-packages/paramiko/client.py", line 361, in connect
+    server_key)
+  File "/usr/lib/python2.7/dist-packages/paramiko/client.py", line 648, in missing_host_key
+    raise SSHException('Server %r not found in known_hosts' % hostname)
+paramiko.ssh_exception.SSHException: Server '192.168.12.1' not found in known_hosts
+ROBOT_INSTALL_RETRY_PINNED_OPENSSH
+[sudo] password for EPRobot: /home/EPRobot/medical_clock_sync_20261011/chrony_3.2-4ubuntu4.5_arm64.deb: OK
+Unit chrony.service does not exist, proceeding anyway.
+Created symlink /etc/systemd/system/chrony.service → /dev/null.
+Selecting previously unselected package chrony.
+(Reading database ... 261694 files and directories currently installed.)
+Preparing to unpack .../chrony_3.2-4ubuntu4.5_arm64.deb ...
+Unpacking chrony (3.2-4ubuntu4.5) ...
+Setting up chrony (3.2-4ubuntu4.5) ...
+Creating '_chrony' system user/group for the chronyd daemon…
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+Creating config file /etc/chrony/chrony.conf with new version
+locale: Cannot set LC_ALL to default locale: No such file or directory
+
+Creating config file /etc/chrony/chrony.keys with new version
+Failed to preset unit: Unit file /etc/systemd/system/chrony.service is masked.
+/usr/bin/deb-systemd-helper: error: systemctl preset failed on chrony.service: No such file or directory
+Processing triggers for systemd (237-3ubuntu10.57) ...
+Processing triggers for ureadahead (0.100.0-21) ...
+ureadahead will be reprofiled on next reboot
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Removed /etc/systemd/system/sysinit.target.wants/systemd-timesyncd.service.
+Removed /etc/systemd/system/chrony.service.
+Synchronizing state of chrony.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install enable chrony
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "en_CA.UTF-8",
+	LC_MONETARY = "en_CA.UTF-8",
+	LC_ADDRESS = "en_CA.UTF-8",
+	LC_TELEPHONE = "en_CA.UTF-8",
+	LC_NAME = "en_CA.UTF-8",
+	LC_MEASUREMENT = "en_CA.UTF-8",
+	LC_IDENTIFICATION = "en_CA.UTF-8",
+	LC_NUMERIC = "en_CA.UTF-8",
+	LC_PAPER = "en_CA.UTF-8",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+	LANGUAGE = (unset),
+	LC_ALL = (unset),
+	LC_TIME = "en_CA.UTF-8",
+	LC_MONETARY = "en_CA.UTF-8",
+	LC_ADDRESS = "en_CA.UTF-8",
+	LC_TELEPHONE = "en_CA.UTF-8",
+	LC_NAME = "en_CA.UTF-8",
+	LC_MEASUREMENT = "en_CA.UTF-8",
+	LC_IDENTIFICATION = "en_CA.UTF-8",
+	LC_NUMERIC = "en_CA.UTF-8",
+	LC_PAPER = "en_CA.UTF-8",
+	LANG = "C.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("C.UTF-8").
+Created symlink /etc/systemd/system/chronyd.service → /lib/systemd/system/chrony.service.
+Job for chrony.service failed because the control process exited with error code.
+See "systemctl status chrony.service" and "journalctl -xe" for details.
+Traceback (most recent call last):
+  File "/home/ncut/medical_clock_sync_20261011/vm_install_medical_clock_20261011.py", line 74, in <module>
+    assert process.returncode == 0, 'ROBOT_INSTALL_FAILED'
+AssertionError: ROBOT_INSTALL_FAILED
+[sudo] password for EPRobot: ● chrony.service - chrony, an NTP client/server
+   Loaded: loaded (/lib/systemd/system/chrony.service; enabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/chrony.service.d
+           └─medical-boot.conf
+   Active: active (running) since Sun 2026-10-11 18:10:06 CST; 15ms ago
+     Docs: man:chronyd(8)
+           man:chronyc(1)
+           man:chrony.conf(5)
+  Process: 27239 ExecStartPost=/usr/lib/chrony/chrony-helper update-daemon (code=exited, status=0/SUCCESS)
+  Process: 27232 ExecStart=/usr/lib/systemd/scripts/chronyd-starter.sh $DAEMON_OPTS (code=exited, status=0/SUCCESS)
+  Process: 27231 ExecStartPre=/usr/bin/python2 /usr/local/sbin/medical_clock_boot_guard.py (code=exited, status=0/SUCCESS)
+ Main PID: 27238 (chronyd)
+    Tasks: 1 (limit: 4373)
+   CGroup: /system.slice/chrony.service
+           └─27238 /usr/sbin/chronyd
+
+Oct 11 18:10:06 EPRobot systemd[1]: Starting chrony, an NTP client/server...
+Oct 11 18:10:06 EPRobot python2[27231]: BOOT_STEP_SKIPPED_ROS_OR_SERIAL_ACTIVE; continuous slew only
+Oct 11 18:10:06 EPRobot chronyd[27238]: chronyd version 3.2 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SECHASH +SIGND +ASYNCDNS +IPV6 -DEBUG)
+Oct 11 18:10:06 EPRobot systemd[1]: Started chrony, an NTP client/server.
+Reference ID    : 00000000 ()
+Stratum         : 0
+Ref time (UTC)  : Thu Jan 01 00:00:00 1970
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 1.000000000 seconds
+Root dispersion : 1.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Not synchronised
+210 Number of sources = 1
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current synced, '+' = combined , '-' = not combined,
+| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^? 192.168.12.71                 0   0     0     -     +0ns[   +0ns] +/-    0ns
+ONE_WAY_CONTINUOUS_CLOCK_SERVICES_INSTALLED_NO_BASE_STARTED
+[sudo] password for ncut: active
+Reference ID    : 7F7F0101 ()
+Stratum         : 8
+Ref time (UTC)  : Sun Oct 11 10:11:35 2026
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 0.000000000 seconds
+Root dispersion : 0.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Normal
+VM_ROOT_SCRIPT_COMPLETE
+[sudo] password for EPRobot: active
+Reference ID    : 00000000 ()
+Stratum         : 0
+Ref time (UTC)  : Thu Jan 01 00:00:00 1970
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 24.010 ppm fast
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 1.000000000 seconds
+Root dispersion : 1.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Not synchronised
+ONE_WAY_CONTINUOUS_CLOCK_SERVICES_INSTALLED_NO_BASE_STARTED
+[sudo] password for ncut: enabled
+active
+BOOT_RETRY_CONFIGURED_WITHOUT_RESTART_OR_CLOCK_STEP
+VM_ROOT_SCRIPT_COMPLETE
+[sudo] password for EPRobot: enabled
+active
+BOOT_RETRY_CONFIGURED_WITHOUT_RESTART_OR_CLOCK_STEP
+ONE_WAY_CONTINUOUS_CLOCK_SERVICES_INSTALLED_NO_BASE_STARTED

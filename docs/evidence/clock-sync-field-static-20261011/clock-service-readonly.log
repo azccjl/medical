@@ -1,0 +1,72 @@
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+● chrony.service - chrony, an NTP client/server
+   Loaded: loaded (/lib/systemd/system/chrony.service; enabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/chrony.service.d
+           └─medical-boot.conf
+   Active: failed (Result: exit-code) since Sun 2026-10-11 18:08:06 CST; 58s ago
+     Docs: man:chronyd(8)
+           man:chronyc(1)
+           man:chrony.conf(5)
+  Process: 25719 ExecStartPre=/usr/bin/python2 /usr/local/sbin/medical_clock_boot_guard.py (code=exited, status=1/FAILURE)
+
+Oct 11 18:08:06 EPRobot systemd[1]: Starting chrony, an NTP client/server...
+Oct 11 18:08:06 EPRobot python2[25719]: Traceback (most recent call last):
+Oct 11 18:08:06 EPRobot python2[25719]:   File "/usr/local/sbin/medical_clock_boot_guard.py", line 10, in <module>
+Oct 11 18:08:06 EPRobot python2[25719]:     raise RuntimeError('ROBOT_ROOT_REQUIRED')
+Oct 11 18:08:06 EPRobot python2[25719]: RuntimeError: ROBOT_ROOT_REQUIRED
+Oct 11 18:08:06 EPRobot systemd[1]: chrony.service: Control process exited, code=exited status=1
+Oct 11 18:08:06 EPRobot systemd[1]: chrony.service: Failed with result 'exit-code'.
+Oct 11 18:08:06 EPRobot systemd[1]: Failed to start chrony, an NTP client/server.
+# /lib/systemd/system/chrony.service
+[Unit]
+Description=chrony, an NTP client/server
+Documentation=man:chronyd(8) man:chronyc(1) man:chrony.conf(5)
+Conflicts=systemd-timesyncd.service openntpd.service
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/chronyd.pid
+EnvironmentFile=-/etc/default/chrony
+# Starter takes care of special cases mostly for containers
+ExecStart=/usr/lib/systemd/scripts/chronyd-starter.sh $DAEMON_OPTS
+ExecStartPost=-/usr/lib/chrony/chrony-helper update-daemon
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full
+
+[Install]
+Alias=chronyd.service
+WantedBy=multi-user.target
+
+# /etc/systemd/system/chrony.service.d/medical-boot.conf
+[Service]
+ExecStartPre=/usr/bin/python2 /usr/local/sbin/medical_clock_boot_guard.py
+-- Logs begin at Thu 2025-10-30 13:19:03 CST, end at Sun 2026-10-11 18:09:03 CST. --
+Oct 11 18:08:06 EPRobot systemd[1]: Starting chrony, an NTP client/server...
+Oct 11 18:08:06 EPRobot python2[25719]: Traceback (most recent call last):
+Oct 11 18:08:06 EPRobot python2[25719]:   File "/usr/local/sbin/medical_clock_boot_guard.py", line 10, in <module>
+Oct 11 18:08:06 EPRobot python2[25719]:     raise RuntimeError('ROBOT_ROOT_REQUIRED')
+Oct 11 18:08:06 EPRobot python2[25719]: RuntimeError: ROBOT_ROOT_REQUIRED
+Oct 11 18:08:06 EPRobot systemd[1]: chrony.service: Control process exited, code=exited status=1
+Oct 11 18:08:06 EPRobot systemd[1]: chrony.service: Failed with result 'exit-code'.
+Oct 11 18:08:06 EPRobot systemd[1]: Failed to start chrony, an NTP client/server.
+-rwxr-xr-x 1 root root 1060 Oct 11 18:08 /usr/local/sbin/medical_clock_boot_guard.py
+# Only the Ubuntu VM is the clock authority. No public NTP fallback.
+server 192.168.12.71 iburst minpoll 0 maxpoll 2 maxdelay 0.05
+driftfile /var/lib/chrony/chrony.drift
+logdir /var/log/chrony
+cmdport 0
+# Exit on a large offset; do not propagate a reboot/date error into ROS.
+maxchange 0.5 0 0
+# Slew only. There is deliberately no makestep directive.
+maxslewrate 10000
+[Service]
+ExecStartPre=/usr/bin/python2 /usr/local/sbin/medical_clock_boot_guard.py
+506 Cannot talk to daemon
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE

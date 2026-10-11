@@ -1,0 +1,52 @@
+NAME="Ubuntu"
+VERSION="18.04.5 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.5 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+NAME="Ubuntu"
+VERSION="18.04.6 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.6 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+Linux EPRobot 5.4.0-1059-raspi #66~18.04.1-Ubuntu SMP PREEMPT Sat Apr 9 19:21:31 UTC 2022 aarch64 aarch64 aarch64 GNU/Linux
+adduser	3.116ubuntu1
+iproute2	4.15.0-2ubuntu1.3
+libc6:arm64	2.27-3ubuntu1.6
+libcap2:arm64	1:2.25-1.2
+libcap2-bin	1:2.25-1.2
+libedit2:arm64	3.1-20170329-1
+libnss3:arm64	2:3.35-2ubuntu2.16
+libseccomp2:arm64	2.5.1-1ubuntu1~18.04.2
+lsb-base	9.20170808ubuntu1
+ucf	3.0038
+sudo: a password is required
+16720 roslaunch       /usr/bin/python /opt/ros/melodic/bin/roslaunch /home/EPRobot/medical_site_observe_inputs_20261011.launch
+21488 bash            bash -c #!/bin/bash set -e cat /etc/os-release uname -a dpkg-query -W libc6 libcap2 libedit2 libnss3 libseccomp2 ucf iproute2 lsb-base libcap2-bin adduser || true sudo -n true && echo ROBOT_PASSWORDLESS_SUDO || true find /etc/systemd/system /lib/systemd/system -maxdepth 2 -type f -iname '*clock*' -print grep -R -l 'medical_offline_clock' /etc/systemd/system /etc/rc.local /etc/cron* /home/EPRobot/.bashrc 2>/dev/null || true ps -eo pid,comm,args | grep -E '[m]edical.*clock|[r]oslaunch|[r]oscore|[r]plidar' || true cat /etc/apt/sources.list ss -ulnp | grep ':123 ' || true 
+deb https://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb https://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
+
+
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE

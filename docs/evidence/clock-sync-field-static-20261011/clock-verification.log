@@ -1,0 +1,53 @@
+active
+Reference ID    : 7F7F0101 ()
+Stratum         : 8
+Ref time (UTC)  : Sun Oct 11 10:12:00 2026
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 0.000000000 seconds
+Root dispersion : 0.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Normal
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+active
+inactive
+Reference ID    : C0A80C47 (192.168.12.71)
+Stratum         : 9
+Ref time (UTC)  : Sun Oct 11 10:12:03 2026
+System time     : 0.000131277 seconds slow of NTP time
+Last offset     : -0.000064688 seconds
+RMS offset      : 0.000352199 seconds
+Frequency       : 47.614 ppm fast
+Residual freq   : +0.485 ppm
+Skew            : 98.947 ppm
+Root delay      : 0.002006385 seconds
+Root dispersion : 0.000025135 seconds
+Update interval : 1.0 seconds
+Leap status     : Normal
+210 Number of sources = 1
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current synced, '+' = combined , '-' = not combined,
+| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^* 192.168.12.71                 8   0   377     0   -159us[ -223us] +/- 1004us
+2026-10-11T10:12:03,433204541+00:00
+('BASE_SERIAL_OWNERS', [])
+READONLY_CLOCK_OBSERVER_STARTED
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+{"status": "REFUSED", "errors": [], "stable_sample_count": 60, "tracking_before": "Reference ID    : 7F7F0101 ()\nStratum         : 8\nRef time (UTC)  : Sun Oct 11 10:12:02 2026\nSystem time     : 0.000000000 seconds fast of NTP time\nLast offset     : +0.000000000 seconds\nRMS offset      : 0.000000000 seconds\nFrequency       : 0.000 ppm slow\nResidual freq   : +0.000 ppm\nSkew            : 0.000 ppm\nRoot delay      : 0.000000000 seconds\nRoot dispersion : 0.000000000 seconds\nUpdate interval : 0.0 seconds\nLeap status     : Normal\n", "stable_scan_age_min": 0.111666382, "elapsed": 181.2932143700018, "motion_commands_sent": false, "stable_max_abs_offset_seconds": 0.001078963279724121, "tracking_after": "Reference ID    : 7F7F0101 ()\nStratum         : 8\nRef time (UTC)  : Sun Oct 11 10:15:03 2026\nSystem time     : 0.000000000 seconds fast of NTP time\nLast offset     : +0.000000000 seconds\nRMS offset      : 0.000000000 seconds\nFrequency       : 0.000 ppm slow\nResidual freq   : +0.000 ppm\nSkew            : 0.000 ppm\nRoot delay      : 0.000000000 seconds\nRoot dispersion : 0.000000000 seconds\nUpdate interval : 0.0 seconds\nLeap status     : Normal\n", "stable_scan_age_max": 0.30262674, "sources_after": "210 Number of sources = 0\n\n  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.\n / .- Source state '*' = current synced, '+' = combined , '-' = not combined,\n| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.\n||                                                 .- xxxx [ yyyy ] +/- zzzz\n||      Reachability register (octal) -.           |  xxxx = adjusted offset,\n||      Log2(Polling interval) --.      |          |  yyyy = measured offset,\n||                                \\     |          |  zzzz = estimated error.\n||                                 |    |           \\\nMS Name/IP address         Stratum Poll Reach LastRx Last sample               \n===============================================================================\n", "stable_scan_count": 1213}

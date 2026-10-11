@@ -1,0 +1,63 @@
+active
+Reference ID    : 7F7F0101 ()
+Stratum         : 8
+Ref time (UTC)  : Sun Oct 11 10:16:38 2026
+System time     : 0.000000000 seconds fast of NTP time
+Last offset     : +0.000000000 seconds
+RMS offset      : 0.000000000 seconds
+Frequency       : 0.000 ppm slow
+Residual freq   : +0.000 ppm
+Skew            : 0.000 ppm
+Root delay      : 0.000000000 seconds
+Root dispersion : 0.000000000 seconds
+Update interval : 0.0 seconds
+Leap status     : Normal
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+active
+Reference ID    : C0A80C47 (192.168.12.71)
+Stratum         : 9
+Ref time (UTC)  : Sun Oct 11 10:16:38 2026
+System time     : 0.000022598 seconds fast of NTP time
+Last offset     : +0.000015391 seconds
+RMS offset      : 0.000021583 seconds
+Frequency       : 30.006 ppm fast
+Residual freq   : +0.046 ppm
+Skew            : 2.002 ppm
+Root delay      : 0.000921330 seconds
+Root dispersion : 0.000126896 seconds
+Update interval : 4.0 seconds
+Leap status     : Normal
+210 Number of sources = 1
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current synced, '+' = combined , '-' = not combined,
+| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^* 192.168.12.71                 8   2   377     3   +718us[ +734us] +/- 1268us
+('BASE_SERIAL_OWNERS', [])
+READONLY_CLOCK_OBSERVER_V2_STARTED
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+{"status": "CONTINUOUS_CLOCK_AND_SCAN_FRESHNESS_VERIFIED", "errors": [], "stable_sample_count": 60, "tracking_before": "Reference ID    : 7F7F0101 ()\nStratum         : 8\nRef time (UTC)  : Sun Oct 11 10:16:41 2026\nSystem time     : 0.000000000 seconds fast of NTP time\nLast offset     : +0.000000000 seconds\nRMS offset      : 0.000000000 seconds\nFrequency       : 0.000 ppm slow\nResidual freq   : +0.000 ppm\nSkew            : 0.000 ppm\nRoot delay      : 0.000000000 seconds\nRoot dispersion : 0.000000000 seconds\nUpdate interval : 0.0 seconds\nLeap status     : Normal\n", "stable_scan_age_min": 0.111650855, "elapsed": 181.09655504599868, "motion_commands_sent": false, "clock_status": "CONTINUOUS_CLOCK_VERIFIED", "stable_max_abs_offset_seconds": 0.0004925727844238281, "tracking_after": "Reference ID    : 7F7F0101 ()\nStratum         : 8\nRef time (UTC)  : Sun Oct 11 10:19:42 2026\nSystem time     : 0.000000000 seconds fast of NTP time\nLast offset     : +0.000000000 seconds\nRMS offset      : 0.000000000 seconds\nFrequency       : 0.000 ppm slow\nResidual freq   : +0.000 ppm\nSkew            : 0.000 ppm\nRoot delay      : 0.000000000 seconds\nRoot dispersion : 0.000000000 seconds\nUpdate interval : 0.0 seconds\nLeap status     : Normal\n", "stable_scan_age_max": 0.213897377, "sources_after": "210 Number of sources = 0\n\n  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.\n / .- Source state '*' = current synced, '+' = combined , '-' = not combined,\n| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.\n||                                                 .- xxxx [ yyyy ] +/- zzzz\n||      Reachability register (octal) -.           |  xxxx = adjusted offset,\n||      Log2(Polling interval) --.      |          |  yyyy = measured offset,\n||                                \\     |          |  zzzz = estimated error.\n||                                 |    |           \\\nMS Name/IP address         Stratum Poll Reach LastRx Last sample               \n===============================================================================\n", "capture_transport": "TCP_NODELAY_QUEUE_1", "stable_scan_count": 1208, "scan_status": "SCAN_FRESHNESS_VERIFIED"}
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+{"node": "lslidar_driver_node", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/lslidar_driver/lslidar_driver_node"], "event": "ENV_NODE_OK", "package": "lslidar_driver"}
+{"node": "scan_to_scan_filter_chain", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/laser_filters/scan_to_scan_filter_chain"], "event": "ENV_NODE_OK", "package": "laser_filters"}
+{"node": "medical_art_racecar.py", "paths": ["/home/EPRobot/robot_ws/src/eprobot_start/script/medical_art_racecar.py"], "event": "ENV_NODE_OK", "package": "eprobot_start"}
+ENV_READY robot ROS_IP=192.168.12.1 ROS_MASTER_URI=http://192.168.12.1:11311 ROBOT_TYPE=UNSET
+{"status": "ROBOT_FIELD_STATIC_PREFLIGHT_PASSED", "publishers": {"/map_metadata": ["/medical_map_server"], "/amcl_pose": ["/amcl"], "/medical_slam_scan": ["/medical_slam_scan"], "/rosout": ["/lslidar_driver_node", "/medical_measured_laser_tf", "/medical_slam_scan", "/amcl", "/medical_map_server", "/medical_site_localization_view", "/medical_motion_dashboard"], "/amcl/parameter_descriptions": ["/amcl"], "/tf": ["/medical_measured_laser_tf", "/amcl"], "/particlecloud": ["/amcl"], "/scan": ["/lslidar_driver_node"], "/rosout_agg": ["/rosout"], "/map": ["/medical_map_server"], "/diagnostics": ["/lslidar_driver_node", "/amcl"], "/amcl/parameter_updates": ["/amcl"]}, "use_sim_time": false, "serial_owners": [], "wall": 1791713987.395366, "source_hashes": {"medical_stop_window.py": "15fe40895e854575cc8fcfd041535dee3ef8aea09a070ee3fc965e6baab60c43", "/home/EPRobot/robot_ws/src/eprobot_start/script/medical_art_racecar_heading_v2_candidate.py": "d671e564242b9058d2ab4fc6fd7d2b64dfa5406c49618e1715fba176f77efce1", "/home/EPRobot/medical_stationary_localization_v3_20261011.py": "aa06ade75f042131310bf2bad910070728472d68c486ebd3592e206a31b6384d"}}
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE

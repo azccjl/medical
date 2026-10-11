@@ -1,0 +1,45 @@
+VM_ARCH
+amd64
+chrony:
+  Installed: (none)
+  Candidate: 3.2-4ubuntu4.5
+  Version table:
+     3.2-4ubuntu4.5 500
+        500 http://us.archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages
+        500 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages
+     3.2-4ubuntu4 500
+        500 http://us.archive.ubuntu.com/ubuntu bionic/main amd64 Packages
+Package: chrony
+Architecture: amd64
+Version: 3.2-4ubuntu4.5
+Priority: extra
+Section: admin
+Origin: Ubuntu
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Original-Maintainer: Vincent Blut <vincent.debian@free.fr>
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Installed-Size: 497
+Provides: time-daemon
+Depends: libc6 (>= 2.27), libcap2 (>= 1:2.10), libedit2 (>= 2.11-20080614), libnss3 (>= 2:3.13.4-2~), libseccomp2 (>= 2.2.3-3~), ucf, iproute2, lsb-base, libcap2-bin, adduser
+Recommends: networkd-dispatcher (>= 1.7-0ubuntu3)
+Suggests: dnsutils
+Conflicts: ntp, time-daemon
+Replaces: time-daemon
+Filename: pool/main/c/chrony/chrony_3.2-4ubuntu4.5_amd64.deb
+Size: 203856
+MD5sum: 76357e3b1ec5228f31b09963f8b23875
+SHA1: 442f8d251e11ede93db7344736b6c31052577762
+SHA256: 6add943b7a4882525510d67b851283883f9f84d3808660ce7f793568e2a3ccef
+SHA512: 766be8cfe0f84db7509f51c04d25eb6eb432bebbfc98898becb1b8aad8c94721198b0e663b19a72b992e101637b3de0c5b189de9dac18b6c41d270e22d3e8814
+Homepage: https://chrony.tuxfamily.org
+Description-en: Versatile implementation of the Network Time Protocol
+ It consists of a pair of programs:
+ .
+ chronyd:  This is a daemon which runs in background on the system.
+ It obtains measurements (e.g. via the network) of the system's offset
+ relative to other systems and adjusts the system time accordingly. For
+ isolated systems, the user can periodically enter the correct time by
+ hand (using 'chronyc'). In either case 'chronyd' determines the rate
+ at which the computer gains or loses time, and compensates for this.
+ Chronyd implements the NTP protocol and can act as either a client or
+ a server.

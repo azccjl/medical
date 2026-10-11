@@ -1,0 +1,55 @@
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+{"node": "lslidar_driver_node", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/lslidar_driver/lslidar_driver_node"], "event": "ENV_NODE_OK", "package": "lslidar_driver"}
+{"node": "scan_to_scan_filter_chain", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/laser_filters/scan_to_scan_filter_chain"], "event": "ENV_NODE_OK", "package": "laser_filters"}
+{"node": "medical_art_racecar.py", "paths": ["/home/EPRobot/robot_ws/src/eprobot_start/script/medical_art_racecar.py"], "event": "ENV_NODE_OK", "package": "eprobot_start"}
+ENV_READY robot ROS_IP=192.168.12.1 ROS_MASTER_URI=http://192.168.12.1:11311 ROBOT_TYPE=UNSET
+{"status": "ROBOT_FIELD_STATIC_PREFLIGHT_PASSED", "publishers": {"/map_metadata": ["/medical_map_server"], "/amcl_pose": ["/amcl"], "/medical_slam_scan": ["/medical_slam_scan"], "/rosout": ["/lslidar_driver_node", "/medical_measured_laser_tf", "/medical_slam_scan", "/amcl", "/medical_map_server", "/medical_site_localization_view", "/medical_motion_dashboard"], "/amcl/parameter_descriptions": ["/amcl"], "/tf": ["/medical_measured_laser_tf", "/amcl"], "/particlecloud": ["/amcl"], "/scan": ["/lslidar_driver_node"], "/rosout_agg": ["/rosout"], "/map": ["/medical_map_server"], "/diagnostics": ["/lslidar_driver_node", "/amcl"], "/amcl/parameter_updates": ["/amcl"]}, "use_sim_time": false, "serial_owners": [], "wall": 1791714018.222485, "source_hashes": {"medical_stop_window.py": "15fe40895e854575cc8fcfd041535dee3ef8aea09a070ee3fc965e6baab60c43", "/home/EPRobot/robot_ws/src/eprobot_start/script/medical_art_racecar_heading_v2_candidate.py": "d671e564242b9058d2ab4fc6fd7d2b64dfa5406c49618e1715fba176f77efce1", "/home/EPRobot/medical_stationary_localization_v3_20261011.py": "aa06ade75f042131310bf2bad910070728472d68c486ebd3592e206a31b6384d"}}
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+SCAN_FRESH_BEFORE_ZERO_ONLY_START base_laser_link 0.129072422
+[WARN] [1791714061.995712]: Could not process inbound connection: Internal error processing topic [/initialpose]{'message_definition': "# This expresses an estimated pose with a reference coordinate frame and timestamp\n\nHeader header\nPoseWithCovariance pose\n\n================================================================================\nMSG: std_msgs/Header\n# Standard metadata for higher-level stamped data types.\n# This is generally used to communicate timestamped data \n# in a particular coordinate frame.\n# \n# sequence ID: consecutively increasing ID \nuint32 seq\n#Two-integer timestamp that is expressed as:\n# * stamp.sec: seconds (stamp_secs) since epoch (in Python the variable is called 'secs')\n# * stamp.nsec: nanoseconds since stamp_secs (in Python the variable is called 'nsecs')\n# time-handling sugar is provided by the client library\ntime stamp\n#Frame this data is associated with\nstring frame_id\n\n================================================================================\nMSG: geometry_msgs/PoseWithCovariance\n# This represents a pose in free space with uncertainty.\n\nPose pose\n\n# Row-major representation of the 6x6 covariance matrix\n# The orientation parameters use a fixed-axis representation.\n# In order, the parameters are:\n# (x, y, z, rotation about X axis, rotation about Y axis, rotation about Z axis)\nfloat64[36] covariance\n\n================================================================================\nMSG: geometry_msgs/Pose\n# A representation of pose in free space, composed of position and orientation. \nPoint position\nQuaternion orientation\n\n================================================================================\nMSG: geometry_msgs/Point\n# This contains the position of a point in free space\nfloat64 x\nfloat64 y\nfloat64 z\n\n================================================================================\nMSG: geometry_msgs/Quaternion\n# This represents an orientation in free space in quaternion form.\n\nfloat64 x\nfloat64 y\nfloat64 z\nfloat64 w\n", 'callerid': '/medical_site_localization_view', 'tcp_nodelay': '0', 'md5sum': '953b798c0f514ff060a53a3498ce6246', 'topic': '/initialpose', 'type': 'geometry_msgs/PoseWithCovarianceStamped'}
+INITIALPOSE_ONLY_NO_VELOCITY
+REINITIALIZED_NO_MOTION None AMCL 12
+ZERO_ONLY_REINITIALIZE_EXIT=0
+ZERO_ONLY_LIVE_STATE {"status": "\u4f4d\u7f6e\u4f30\u8ba1\u66f4\u65b0\u4e2d \u00b7 \u8bf7\u6838\u5bf9\u96f7\u8fbe\u4e0e\u5899\u7ebf", "laser_pose": {"stamp": 1791714062.053367, "frame": "base_laser_link", "wall_time": 1791714062.172774, "x": -0.08617388442542884, "y": -0.10799769474204933, "fresh": true}, "pose": {"available": true, "ros_age": 0.030084848, "yaw": 0.02244755629657144, "wall_time": 1791714062.046426, "x": -0.22113988989118183, "y": -0.1110271119497531, "fresh": true}, "uncertainty": {"xy_std_m": [0.150462703753192, 0.06279038695455902], "yaw_std_deg": 5.51360010206906}}
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+{"node": "lslidar_driver_node", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/lslidar_driver/lslidar_driver_node"], "event": "ENV_NODE_OK", "package": "lslidar_driver"}
+{"node": "scan_to_scan_filter_chain", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/laser_filters/scan_to_scan_filter_chain"], "event": "ENV_NODE_OK", "package": "laser_filters"}
+{"node": "medical_art_racecar.py", "paths": ["/home/EPRobot/robot_ws/src/eprobot_start/script/medical_art_racecar.py"], "event": "ENV_NODE_OK", "package": "eprobot_start"}
+ENV_READY robot ROS_IP=192.168.12.1 ROS_MASTER_URI=http://192.168.12.1:11311 ROBOT_TYPE=UNSET
+2026-10-11T18:20:23,010425686+08:00
+STATIONARY_LOCALIZATION_EXIT=1
+2026-10-11T18:22:27,182895181+08:00
+POST_STATIONARY_SERIAL_OWNERS []
+
+ZERO_ONLY_HARDWARE_EXIT=1
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+STATIONARY_STAGE_DOWNLOAD_COMPLETE

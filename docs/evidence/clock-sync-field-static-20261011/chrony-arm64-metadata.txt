@@ -1,0 +1,26 @@
+Package: chrony
+Priority: extra
+Section: admin
+Installed-Size: 453
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Architecture: arm64
+Version: 3.2-4ubuntu4.5
+Recommends: networkd-dispatcher (>= 1.7-0ubuntu3)
+Replaces: time-daemon
+Suggests: dnsutils
+Provides: time-daemon
+Depends: libc6 (>= 2.27), libcap2 (>= 1:2.10), libedit2 (>= 2.11-20080614), libnss3 (>= 2:3.13.4-2~), libseccomp2 (>= 2.2.3-3~), ucf, iproute2, lsb-base, libcap2-bin, adduser
+Conflicts: ntp, time-daemon
+Filename: pool/main/c/chrony/chrony_3.2-4ubuntu4.5_arm64.deb
+Size: 183772
+MD5sum: f293c2744d10b760237ca70f84a497f2
+SHA1: d02b3c9749384a0d304e6f5e5aa1d67891ab66fe
+SHA256: ed36dda3659d3039244ad0c5bcfd690d88335bec90ad642066f1ea4af7c23264
+SHA512: 62da3fbea43071c7286240638c202b85cf850fcbd2eeed7d58248b7c3225c3653b736978c87fb0aafe7131ff150fe5bfea4141ecddcece7d8aa58af7ea0d1706
+Homepage: https://chrony.tuxfamily.org
+Description: Versatile implementation of the Network Time Protocol
+Description-md5: f0bbbeab28dbc2e9fe201d3d79df8c96
+Original-Maintainer: Vincent Blut <vincent.debian@free.fr>
+Origin: Ubuntu
+Bugs: https://bugs.launchpad.net/ubuntu/+filebug
+Supported: 5y

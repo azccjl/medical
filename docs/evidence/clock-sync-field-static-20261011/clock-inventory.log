@@ -1,0 +1,373 @@
+2026-10-11T09:56:50,666538959+00:00
+                      Local time: Sun 2026-10-11 17:56:50 CST
+                  Universal time: Sun 2026-10-11 09:56:50 UTC
+                        RTC time: Sun 2026-10-11 09:56:50
+                       Time zone: Asia/Shanghai (CST, +0800)
+       System clock synchronized: no
+systemd-timesyncd.service active: yes
+                 RTC in local TZ: no
+Unknown operation show
+/usr/bin/vmware-toolbox-cmd
+active
+inactive
+inactive
+active
+Failed to get unit file state for chrony.service: No such file or directory
+enabled
+Disabled
+tsc
+tsc hpet acpi_pm 
+   730 /lib/systemd/systemd-timesyncd
+   797 /usr/bin/vmtoolsd
+  1797 /usr/bin/vmtoolsd -n vmusr --blockFd 3
+  9979 /usr/bin/vmtoolsd
+CLOCK_CONFIG /etc/systemd/timesyncd.conf
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+#
+# Entries in this file show the compile time defaults.
+# You can change settings by editing this file.
+# Defaults can be restored by simply deleting this file.
+#
+# See timesyncd.conf(5) for details.
+
+[Time]
+#NTP=
+#FallbackNTP=ntp.ubuntu.com
+#RootDistanceMaxSec=5
+#PollIntervalMinSec=32
+#PollIntervalMaxSec=2048
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+2026-10-11T09:56:52,667871831+00:00
+                      Local time: Sun 2026-10-11 17:56:52 CST
+                  Universal time: Sun 2026-10-11 09:56:52 UTC
+                        RTC time: n/a
+                       Time zone: Asia/Shanghai (CST, +0800)
+       System clock synchronized: no
+systemd-timesyncd.service active: yes
+                 RTC in local TZ: no
+Unknown operation show
+active
+inactive
+inactive
+enabled
+Failed to get unit file state for chrony.service: No such file or directory
+  751 /lib/systemd/systemd-timesyncd
+19035 bash -c #!/bin/bash # Read-only: no clock change, no ROS/control startup. set -e date -u -Ins timedatectl status || true timedatectl show || true for command in chronyc chronyd ntpd ntpq adjtimex; do command -v "$command" || true; done systemctl is-active systemd-timesyncd chrony ntp || true systemctl is-enabled systemd-timesyncd chrony ntp || true ps -eo pid,args | grep -E '[c]hronyd|[n]tpd|[t]imesyncd|[m]edical_offline_clock' || true for path in /etc/systemd/timesyncd.conf /etc/chrony/chrony.conf /etc/ntp.conf; do   if test -e "$path"; then echo "CLOCK_CONFIG $path"; cat "$path"; fi done python2 - <<'PY' import os,glob,json d=os.path.realpath('/dev/EPRobot_base');owners=[] for pid in os.listdir('/proc'):     if not pid.isdigit():continue     for f in glob.glob('/proc/'+pid+'/fd/*'):         try:             if os.readlink(f)==d:owners.append(pid)         except OSError:pass print('BASE_SERIAL_OWNERS',json.dumps(owners)) assert not owners,owners PY sha256sum /home/EPRobot/medical_offline_clock.py cat /home/EPRobot/medical_offline_clock.py 
+CLOCK_CONFIG /etc/systemd/timesyncd.conf
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it
+#  under the terms of the GNU Lesser General Public License as published by
+#  the Free Software Foundation; either version 2.1 of the License, or
+#  (at your option) any later version.
+#
+# Entries in this file show the compile time defaults.
+# You can change settings by editing this file.
+# Defaults can be restored by simply deleting this file.
+#
+# See timesyncd.conf(5) for details.
+
+[Time]
+#NTP=
+#FallbackNTP=ntp.ubuntu.com
+#RootDistanceMaxSec=5
+#PollIntervalMinSec=32
+#PollIntervalMaxSec=2048
+('BASE_SERIAL_OWNERS', '[]')
+27593557417816be54b80733a7b920984639dabaf60c1c22a9c6329003bc4833  /home/EPRobot/medical_offline_clock.py
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+"""Offline clock alignment using the VM's wall clock, without ROS or new packages.
+
+Server only answers time queries. Sync requires root and refuses while detected
+ROS processes are running. Uses repeated four-timestamp samples and verifies
+the result. Selftest never opens sockets or changes the system clock.
+"""
+from __future__ import print_function
+import argparse
+import io
+import json
+import math
+import os
+import socket
+import signal
+import subprocess
+import sys
+import time
+import uuid
+
+
+PROTOCOL = 'medical_offline_clock_v1'
+ROS_NAMES = set(['roscore', 'rosmaster', 'roslaunch', 'rosout', 'nodelet',
+                 'art_racecar.py', 'eprobot_joy_node', 'huanyu_joy_node',
+                 'rviz', 'rqt', 'rqt_gui', 'rqt_gui_cpp',
+                 'medical_board_camera_check.py', 'medical_stationary_check.py',
+                 'medical_qr_smoke.py', 'medical_ground_preflight.py',
+                 'medical_control_intake.py'])
+
+
+def emit(event, **values):
+    values['event'] = event
+    print(json.dumps(values, ensure_ascii=True, sort_keys=True))
+    sys.stdout.flush()
+
+
+def finite(value):
+    return not math.isnan(value) and not math.isinf(value)
+
+
+def measure(t0, t1, t2, t3):
+    values = [float(x) for x in [t0, t1, t2, t3]]
+    if not all(finite(x) for x in values):
+        raise ValueError('Non-finite timestamp')
+    t0, t1, t2, t3 = values
+    elapsed = t3 - t0
+    server_duration = t2 - t1
+    if elapsed < 0 or elapsed > 3.0 or server_duration < 0:
+        raise ValueError('Clock changed or request exceeded 3 seconds')
+    delay = elapsed - server_duration
+    if delay < -0.01 or delay > 1.0:
+        raise ValueError('Invalid or excessive round trip delay')
+    # The offset is large when the robot clock is months behind the VM clock.
+    offset = ((t1 - t0) + (t2 - t3)) / 2.0
+    return {'offset_seconds': offset, 'round_trip_seconds': max(0.0, delay)}
+
+
+def active_ros_processes(proc_root='/proc'):
+    found = []
+    for name in os.listdir(proc_root):
+        if not name.isdigit() or int(name) == os.getpid():
+            continue
+        try:
+            with open(os.path.join(proc_root, name, 'cmdline'), 'rb') as stream:
+                args = [x.decode('utf-8', 'replace') for x in stream.read().split(b'\0') if x]
+        except (IOError, OSError):
+            continue
+        if any('/opt/ros/' in x or '/robot_ws/' in x or '/carto_ws/' in x or
+               os.path.basename(x) in ROS_NAMES or
+               os.path.basename(x).startswith('rqt_') for x in args):
+            found.append({'pid': int(name), 'args': args})
+    return found
+
+
+def stop_master():
+    """Stop only a core with no detected drivers or other local ROS nodes."""
+    rows = active_ros_processes()
+    allowed = set(['roscore', 'rosmaster', 'rosout'])
+    def kind(row):
+        for arg in row['args']:
+            name = os.path.basename(arg)
+            if name in allowed:
+                return name
+        return None
+    other = [row for row in rows if kind(row) is None]
+    if other:
+        emit('STOP_OTHER_ROS_ACTIVE', processes=other)
+        return 20
+    cores = [row for row in rows if kind(row) == 'roscore']
+    if len(cores) > 1 or (rows and not cores):
+        emit('STOP', reason='Unexpected master process layout; no processes stopped', processes=rows)
+        return 21
+    if cores:
+        emit('MASTER_STOP_REQUEST', pid=cores[0]['pid'])
+        os.kill(cores[0]['pid'], signal.SIGINT)
+        for unused in range(20):
+            if not active_ros_processes():
+                break
+            time.sleep(0.5)
+    remaining = active_ros_processes()
+    if remaining:
+        emit('STOP_ROS_ACTIVE', processes=remaining)
+        return 22
+    emit('ROS_STOPPED', scope='no detected ROS processes; no motion commands sent')
+    return 0
+
+
+def server(args):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((args.bind, args.port))
+    emit('CLOCK_SERVER_READY', bind=args.bind, port=args.port,
+         allowed_client=args.allow_client, vm_epoch=time.time())
+    try:
+        while True:
+            raw, peer = sock.recvfrom(4096)
+            received = time.time()
+            if peer[0] != args.allow_client:
+                continue
+            try:
+                request = json.loads(raw.decode('utf-8'))
+                if not isinstance(request, dict) or request.get('protocol') != PROTOCOL:
+                    continue
+                nonce = request['nonce']
+                if not isinstance(nonce, type(u'')) or len(nonce) != 32:
+                    continue
+                reply = {'protocol': PROTOCOL, 'nonce': nonce,
+                         'server_received': received, 'server_sent': time.time()}
+                sock.sendto(json.dumps(reply).encode('utf-8'), peer)
+            except (ValueError, KeyError, TypeError):
+                continue
+    except KeyboardInterrupt:
+        emit('CLOCK_SERVER_STOPPED')
+    finally:
+        sock.close()
+    return 0
+
+
+def sample(server_ip, port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(3.0)
+    sock.connect((server_ip, port))
+    nonce = uuid.uuid4().hex
+    request = json.dumps({'protocol': PROTOCOL, 'nonce': nonce}).encode('utf-8')
+    try:
+        t0 = time.time()
+        sock.send(request)
+        raw = sock.recv(4096)
+        t3 = time.time()
+        reply = json.loads(raw.decode('utf-8'))
+        if not isinstance(reply, dict) or reply.get('protocol') != PROTOCOL or reply.get('nonce') != nonce:
+            raise ValueError('Unexpected clock reply')
+        return measure(t0, reply['server_received'], reply['server_sent'], t3)
+    finally:
+        sock.close()
+
+
+def take_samples(server_ip, port, event):
+    rows = []
+    for index in range(5):
+        try:
+            row = sample(server_ip, port)
+            rows.append(row)
+            emit(event, index=index + 1, **row)
+        except (socket.error, ValueError, KeyError, TypeError) as exc:
+            emit('CLOCK_SAMPLE_ERROR', index=index + 1, error=str(exc))
+        time.sleep(0.1)
+    return rows
+
+
+def sync(args):
+    if not hasattr(os, 'geteuid') or os.geteuid() != 0:
+        emit('STOP', reason='Run sync on robot with sudo; server needs no sudo')
+        return 10
+    if not os.path.isdir('/home/EPRobot/robot_ws'):
+        emit('STOP', reason='Sync must run on the EPRobot board')
+        return 11
+    processes = active_ros_processes()
+    if processes:
+        emit('STOP_ROS_ACTIVE', processes=processes)
+        return 12
+    emit('CLOCK_BEFORE', robot_epoch=time.time(), server=args.server)
+    rows = take_samples(args.server, args.port, 'CLOCK_SAMPLE_BEFORE')
+    if len(rows) < 3:
+        emit('STOP', reason='Fewer than three valid VM time samples; no clock change')
+        return 13
+    best = min(rows, key=lambda x: x['round_trip_seconds'])
+    offsets = [x['offset_seconds'] for x in rows]
+    if max(offsets) - min(offsets) > 0.5:
+        emit('STOP', reason='Unstable clock measurements; no clock change')
+        return 14
+    # Recheck immediately before the single privileged mutation.
+    processes = active_ros_processes()
+    if processes:
+        emit('STOP_ROS_ACTIVE', processes=processes)
+        return 12
+    target = time.time() + best['offset_seconds']
+    if not 1262304000.0 <= target < 4102444800.0:
+        emit('STOP', reason='VM target outside years 2010 through 2099')
+        return 15
+    emit('CLOCK_SET_REQUEST', target_epoch=target,
+         chosen_round_trip_seconds=best['round_trip_seconds'])
+    subprocess.check_call(['date', '-u', '-s', '@%.6f' % target])
+    after = take_samples(args.server, args.port, 'CLOCK_SAMPLE_AFTER')
+    if len(after) < 3:
+        emit('CLOCK_CHANGED_UNVERIFIED', reason='Post-change samples incomplete')
+        return 16
+    maximum = max(abs(row['offset_seconds']) for row in after)
+    # A local operating check, not an official navigation or competition criterion.
+    if maximum > 0.5:
+        emit('CLOCK_CHANGED_UNVERIFIED', max_abs_offset_seconds=maximum)
+        return 17
+    emit('CLOCK_SYNC_OK', robot_epoch=time.time(), valid_after_samples=len(after),
+         max_abs_offset_seconds=maximum, acceptance_note='local clock alignment check only')
+    return 0
+
+
+def selftest():
+    # A symmetric 40 ms trip and a one-year clock offset.
+    base = 1000000.0
+    delta = 29467160.0
+    row = measure(base, base + delta + 0.020,
+                  base + delta + 0.022, base + 0.042)
+    assert abs(row['offset_seconds'] - delta) < 1e-6
+    assert abs(row['round_trip_seconds'] - 0.040) < 1e-6
+    for values in [(1, 2, 3, 0), (1, 2, 1, 2), (1, 2, 2, 5),
+                   (1, float('nan'), 2, 2), (1, 2, float('inf'), 2)]:
+        try:
+            measure(*values)
+        except ValueError:
+            continue
+        raise AssertionError('Invalid clock sample accepted')
+    import tempfile
+    import shutil
+    root = tempfile.mkdtemp(prefix='clock_guard_')
+    temp_parent = os.path.realpath(tempfile.gettempdir()) + os.sep
+    if not (os.path.realpath(root).startswith(temp_parent) and
+            os.path.basename(root).startswith('clock_guard_')):
+        raise ValueError('Unexpected selftest cleanup path')
+    try:
+        inputs = {'10001': ['/usr/bin/python', '/opt/ros/melodic/bin/roscore'],
+                  '10002': ['/usr/bin/python', '/home/EPRobot/art_racecar.py'],
+                  '10003': ['/usr/bin/sshd', '-D'],
+                  '10004': ['python2', 'medical_offline_clock.py', 'sync']}
+        for pid, args in inputs.items():
+            os.makedirs(os.path.join(root, pid))
+            with open(os.path.join(root, pid, 'cmdline'), 'wb') as stream:
+                stream.write(b'\0'.join(x.encode('utf-8') for x in args))
+        assert set(x['pid'] for x in active_ros_processes(root)) == set([10001, 10002])
+    finally:
+        shutil.rmtree(root)
+    emit('SELFTEST_OK', scope='clock mathematics and process guard; no sockets or clock changes')
+    return 0
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    sub = parser.add_subparsers(dest='mode')
+    p = sub.add_parser('server')
+    p.add_argument('--bind', required=True)
+    p.add_argument('--port', type=int, default=49123)
+    p.add_argument('--allow-client', default='192.168.12.1')
+    p = sub.add_parser('sync')
+    p.add_argument('--server', required=True)
+    p.add_argument('--port', type=int, default=49123)
+    sub.add_parser('selftest')
+    sub.add_parser('stop-master')
+    args = parser.parse_args()
+    if args.mode == 'server':
+        return server(args)
+    if args.mode == 'sync':
+        return sync(args)
+    if args.mode == 'selftest':
+        return selftest()
+    if args.mode == 'stop-master':
+        return stop_master()
+    parser.error('Choose server, sync, selftest or stop-master')
+
+
+if __name__ == '__main__':
+    try:
+        sys.exit(main())
+    except (IOError, OSError, ValueError, subprocess.CalledProcessError) as exc:
+        emit('ERROR', error=str(exc))
+        sys.exit(1)
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE

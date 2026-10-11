@@ -1,0 +1,370 @@
+{
+  "status": "REVIEW_REQUIRED",
+  "audit_sha256": "42fe55fa0eaae7491df942b58502bff34dbd1fa7c6ff67baba0818b9d36ec9e8",
+  "hardware_exit_codes": [
+    "1"
+  ],
+  "tx_frames": 7093,
+  "tx_policy_faults": [
+    {
+      "error": "STRICT_STATIONARY_WINDOW_NEVER_READY",
+      "event": "STATIONARY_LOCALIZATION_ABORT",
+      "mono": 24449.921456187,
+      "wall": 1791714146.360495
+    }
+  ],
+  "rx_odom_frames": 5992,
+  "rx_nonzero_linear_frames": [],
+  "rx_parser_rejected": 0,
+  "rx_parser_overflows": 0,
+  "max_abs_raw_vx": 0.0,
+  "max_abs_raw_wz": 0.013439035240356337,
+  "ready_stop": {
+    "age_seconds": 0.01504626600217307,
+    "max_gap": 0.2,
+    "note": "Feedback evidence only; physical observation still required",
+    "passed": true,
+    "required_span": 4,
+    "reset_events": [
+      {
+        "reason": "nonstationary",
+        "t": 24335.060725194
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24335.235632843
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24336.759163715
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24338.530320376
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24338.540546856
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24338.595539144
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24340.675947422
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24342.037417432
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24343.64474909
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24344.23724762
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24354.819061666
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24374.756922921
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24375.915415916
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24379.837969249
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24384.189073158
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24384.375729668
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24384.87838642
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24384.963434734
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24385.73868288
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24389.939500181
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24390.276721329
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24390.396805998
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24390.441720917
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24392.149551463
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24393.616675951
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24395.315898676
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24395.396934163
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24396.219965227
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24400.658844189
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24401.215447096
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24401.43618443
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24401.516417201
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24403.497300817
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24403.817190133
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24405.835596732
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24406.000739321
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24409.338888589
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24409.679040101
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24410.697617587
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24411.662773004
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24414.400340623
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24414.817852622
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24416.816282909
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24416.956211291
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24418.845699297
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24419.695838911
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24420.0566446
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24420.106715367
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24420.116961852
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24420.645787402
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24421.776721001
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24421.956673791
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24426.228942521
+      }
+    ],
+    "samples": 202,
+    "span_seconds": 4.019368798999494,
+    "threshold": 0.002
+  },
+  "hardware_final_stop": null,
+  "stationary_window_resets": 7,
+  "baseline_stop": {
+    "age_seconds": 0.012032603997795377,
+    "note": "Feedback evidence only; physical observation still required",
+    "samples": 201,
+    "reset_events": [
+      {
+        "reason": "nonstationary",
+        "t": 24404.395427849
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24404.577036056
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24406.102698484
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24407.876902734
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24407.939545094
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24410.024940659
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24411.376070338
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24412.978026238
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24413.575907824
+      }
+    ],
+    "span_seconds": 4.00082921700232,
+    "max_gap": 0.2,
+    "passed": true,
+    "threshold": 0.002,
+    "required_span": 4
+  },
+  "final_stop": {
+    "age_seconds": 0.000905621000129031,
+    "note": "Feedback evidence only; physical observation still required",
+    "samples": 200,
+    "reset_events": [
+      {
+        "reason": "nonstationary",
+        "t": 24404.395427849
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24404.577036056
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24406.102698484
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24407.876902734
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24407.939545094
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24410.024940659
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24411.376070338
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24412.978026238
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24413.575907824
+      },
+      {
+        "reason": "nonstationary",
+        "t": 24424.172282239
+      }
+    ],
+    "span_seconds": 4.000219206998736,
+    "max_gap": 0.2,
+    "passed": true,
+    "threshold": 0.002,
+    "required_span": 4
+  },
+  "capture_status": "REINITIALIZED_NO_MOTION",
+  "capture_error": null,
+  "captured_pose": {
+    "available": true,
+    "ros_age": 0.014827013,
+    "yaw": 0.02246932394376463,
+    "wall_time": 1791714061.846514,
+    "x": -0.22113988989118183,
+    "y": -0.1110271119497531,
+    "fresh": true
+  },
+  "uncertainty": {
+    "xy_std_m": [
+      0.150462703753192,
+      0.06279038695455902
+    ],
+    "yaw_std_deg": 5.51360010206906
+  },
+  "amcl_messages": 12,
+  "odom_messages": 1600,
+  "physical_observation": "AWAITING_USER",
+  "limitation": "Finite zero-only capture. Driver closes after deadline; TF subsequently expires. Not ground-motion or navigation acceptance."
+}
