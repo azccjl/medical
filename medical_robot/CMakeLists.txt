@@ -16,6 +16,9 @@ catkin_install_python(PROGRAMS
   scripts/route_geometry.py
   scripts/navigation_policy.py
   scripts/navigation_scan_guard.py
+  scripts/navigation_scan_guard_candidate_v2.py
+  scripts/navigation_forward_map_guard_candidate.py
+  scripts/navigation_forward_scan.py
   scripts/route_workbench.py
   scripts/navigation_command_gate.py
   scripts/navigation_audited_base.py

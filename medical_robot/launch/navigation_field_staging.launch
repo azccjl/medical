@@ -1,4 +1,7 @@
 <launch>
+  <arg name="forward_scan" default="false" />
+  <node if="$(arg forward_scan)" pkg="medical_robot" type="navigation_forward_scan.py"
+        name="medical_navigation_forward_scan" output="screen" required="true" />
   <!-- On-site prerequisite: map_server, AMCL and validated sensor/odom inputs. -->
   <!-- Planning output is isolated: no bridge or base driver in this launch. -->
   <node pkg="move_base" type="move_base" name="medical_field_move_base" output="screen" required="true">
@@ -6,6 +9,10 @@
     <rosparam file="$(find medical_robot)/config/navigation/costmap_common.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find medical_robot)/config/navigation/global_costmap.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find medical_robot)/config/navigation/local_costmap.yaml" command="load" ns="local_costmap" />
+    <param if="$(arg forward_scan)" name="global_costmap/obstacle_layer/laser_scan_sensor/topic" value="/medical_navigation_forward_scan" />
+    <param if="$(arg forward_scan)" name="local_costmap/obstacle_layer/laser_scan_sensor/topic" value="/medical_navigation_forward_scan" />
+    <param if="$(arg forward_scan)" name="global_costmap/obstacle_layer/laser_scan_sensor/inf_is_valid" value="false" />
+    <param if="$(arg forward_scan)" name="local_costmap/obstacle_layer/laser_scan_sensor/inf_is_valid" value="false" />
     <rosparam file="$(find medical_robot)/config/navigation/teb_field_candidate.yaml" command="load" />
     <param name="base_global_planner" value="navfn/NavfnROS" />
     <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />

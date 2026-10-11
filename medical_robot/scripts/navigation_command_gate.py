@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Observe by default. Output requires explicit flags and field evidence."""
 from __future__ import print_function
-import argparse,json,math,os,sys,threading,time
+import argparse,hashlib,json,math,os,sys,threading,time
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from navigation_policy import acceptance_errors,command_policy
 
@@ -14,10 +14,27 @@ def lease_is_active(item,monotonic_now):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--acceptance',required=True);p.add_argument('--map-sha',required=True)
     p.add_argument('--enable-output',action='store_true');p.add_argument('--site-ready-confirmed',action='store_true')
-    p.add_argument('--audit',required=True);a=p.parse_args();cert=json.load(open(a.acceptance))
+    p.add_argument('--audit',required=True)
+    p.add_argument('--scan-topic',choices=('/scan',),default='/scan',help='Original M10 scan; do not use SLAM resampling for motion clearance')
+    p.add_argument('--clearance-policy',choices=('full-scan','forward-map'),default='full-scan')
+    p.add_argument('--static-map',help='Map YAML matching --map-sha; required for forward-map policy')
+    a=p.parse_args();cert=json.load(open(a.acceptance))
     errors=acceptance_errors(cert,a.map_sha)
+    if a.clearance_policy=='forward-map' and cert.get('clearance_policy')!='forward-map':
+        errors.append('FORWARD_MAP_FIELD_POLICY_NOT_ACCEPTED')
     if a.enable_output and (errors or not a.site_ready_confirmed):
         print(json.dumps(dict(status='REFUSED_BEFORE_ROS',errors=errors or ['SITE_CONFIRMATION_REQUIRED'])));return 2
+    clearance_map=None
+    if a.clearance_policy=='forward-map':
+        if not a.static_map:raise ValueError('STATIC_MAP_REQUIRED_FOR_FORWARD_POLICY')
+        import yaml
+        meta=yaml.safe_load(open(a.static_map))
+        image=meta['image']
+        if not os.path.isabs(image):image=os.path.join(os.path.dirname(a.static_map),image)
+        if hashlib.sha256(open(image,'rb').read()).hexdigest()!=a.map_sha:
+            raise ValueError('CLEARANCE_MAP_IDENTITY_CHANGED')
+        from site_localization_view import load_map
+        clearance_map=load_map(a.static_map)
     import rospy,rosgraph
     from geometry_msgs.msg import Twist,PoseWithCovarianceStamped
     from nav_msgs.msg import Odometry
@@ -97,8 +114,20 @@ def main():
             raise ValueError('AMCL_INVALID')
         if max(covariance[0],covariance[7])>.01 or covariance[35]>math.radians(8)**2:
             raise ValueError('AMCL_UNCERTAINTY_TOO_HIGH')
-        from navigation_scan_guard import swept_scan_guard
-        swept_scan_guard(s,v,w,cert['measured_max_stop_distance_m'])
+        if a.clearance_policy=='forward-map':
+            from navigation_forward_map_guard_candidate import evaluate
+            p=pr[1].pose.pose;q=p.orientation
+            pose=dict(x=p.position.x,y=p.position.y,
+                yaw=math.atan2(2*(q.w*q.z+q.x*q.y),1-2*(q.y*q.y+q.z*q.z)))
+            result=evaluate(s,clearance_map,pose,
+                [math.sqrt(covariance[0]),math.sqrt(covariance[7])],math.sqrt(covariance[35]),
+                (rospy.Time.now()-pr[1].header.stamp).to_sec(),
+                (rospy.Time.now()-s.header.stamp).to_sec(),v,w,cert['measured_max_stop_distance_m'])
+            if not result['passed']:
+                raise ValueError(result['map']['error'] or result['scan']['error'])
+        else:
+            from navigation_scan_guard import swept_scan_guard
+            swept_scan_guard(s,v,w,cert['measured_max_stop_distance_m'])
         graph()
     def command(m):
         caller=getattr(m,'_connection_header',{}).get('callerid')
@@ -136,14 +165,16 @@ def main():
             elif output and armed and not error:fault('COMMAND_WATCHDOG_TIMEOUT')
             if output:output.publish(m)
             pub.publish(String(json.dumps(dict(output_enabled=a.enable_output,armed=state['armed'],fault=state['fault'],field_blockers=errors,
+                         clearance_policy=a.clearance_policy,rear_laser_required=a.clearance_policy=='full-scan',
                          strict_stop_available=stop.evidence(now())['passed'],wall=time.time()))))
     rospy.Subscriber('/odom',Odometry,odom,queue_size=1,tcp_nodelay=True)
     rospy.Subscriber('/amcl_pose',PoseWithCovarianceStamped,pose,queue_size=1)
     rospy.Subscriber('/medical_navigation/route_lease',String,lease,queue_size=1,tcp_nodelay=True)
-    rospy.Subscriber('/medical_slam_scan',LaserScan,scan,queue_size=1,tcp_nodelay=True)
+    rospy.Subscriber(a.scan_topic,LaserScan,scan,queue_size=1,tcp_nodelay=True)
     rospy.Subscriber('/medical_field_candidate/cmd_vel',Twist,command,queue_size=1,tcp_nodelay=True)
     timer=rospy.Timer(rospy.Duration(.05),tick)
-    record('GATE_START',output_enabled=a.enable_output,field_blockers=errors)
+    record('GATE_START',output_enabled=a.enable_output,field_blockers=errors,scan_topic=a.scan_topic,
+           clearance_policy=a.clearance_policy,static_map=a.static_map)
     try:rospy.spin()
     finally:
         if output:
