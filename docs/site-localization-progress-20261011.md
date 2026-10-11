@@ -47,4 +47,12 @@ roslaunch medical_robot site_localization_observe.launch \
 
 静止验证文件：Windows `medical-localization-20261011/reference-display-before-retry2.json`、`reference-display-after-retry2.json` 和 `reference-display-update-retry2.log`。验证得到后轴参考点到雷达中心距离 0.135000 m，车头方向投影 0.135000 m，横向偏差 0.000004 m；网页 API 的 TF、雷达和里程计均新鲜，AMCL 协方差约为 x 0.112 m、y 0.053 m、航向 4.85°。控制话题 `/cmd_vel`、`/medical_ground_cmd_vel`、`/medical_nav_cmd_vel`、`/move_base/goal`、`/move_base_simple/goal` 均无发布者。
 
+## 短距定位验证与速度原因（2026-10-11）
+
+用户确认前方至少 1 m 空旷后，执行一次受监督的直行验证。程序先检查控制话题唯一性、雷达通道和静止基线，再向 `/medical_ground_cmd_vel` 发布 `linear.x=0.05 m/s` 持续 4 s，随后发送零速并等待 4 s 严格静止窗口。输出 `short-motion-localization-20261011.json` 状态为 `STOPPED_STATIC_WINDOW_PASSED`，没有错误，控制发布者结束后为 None。
+
+用户现场量得实际移动约 60 cm；程序记录的里程计位移约前进 0.411 m、侧向 -0.071 m，现场测量优先用于判断真实位移。运动没有在文件复制时发生，而是在执行验证程序发送正速度期间发生。
+
+根因是车端候选底盘源码 `medical_art_racecar_heading_v2_candidate.py` 的 `_medical_raw_cmdCB`：当 `trans_x` 为正且小于 `0.1` 时，代码将其改为 `0.1`；负速度也有相同下限。因此本次发送的 `0.05` 被底盘转换成 `0.1`，不能用低于 0.1 的命令实现更慢速度。后续自主运动必须先按这一规则重新设计脉冲时长，并单独标定“命令速度—实际位移”；在完成前不再发送运动命令。
+
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
