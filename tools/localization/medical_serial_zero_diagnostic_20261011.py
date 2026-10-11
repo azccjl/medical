@@ -152,7 +152,8 @@ def bench(args):
             self.diag_next = 0.0
             self.diag_fault = None
             try:
-                super(Diagnostic, self).__init__()
+                # Legacy BaseControl is an old-style class on Python2.
+                legacy.BaseControl.__init__(self)
             except Exception:
                 # The legacy shutdown hook is registered only after startup.
                 if hasattr(self, '_medical_stop_event'):
@@ -171,7 +172,7 @@ def bench(args):
             # No 0x07/0x21 frame, CPU-info shell commands or battery telemetry.
             return
         def timerCommunicationCB(self, event):
-            result = super(Diagnostic, self).timerCommunicationCB(event)
+            result = legacy.BaseControl.timerCommunicationCB(self, event)
             if self._medical_heading.failed:
                 self.diag_fault = 'HEADING_CALIBRATION_FAILED_' + str(self._medical_heading.failed)
             sample = self._medical_fresh_odom()
@@ -188,7 +189,7 @@ def bench(args):
                    (math.isnan(v) or math.isinf(v)) for v in values) or any(values):
                 record('ROS_NONZERO_REJECTED')
                 return
-            return super(Diagnostic, self).cmdCB(message)
+            return legacy.BaseControl.cmdCB(self, message)
         def _medical_write(self, output, label):
             with self._medical_tx_lock:
                 if self._medical_closing and label != 'velocity':
@@ -202,10 +203,15 @@ def bench(args):
                     delay = self.diag_next - now()
                     if delay > 0:
                         time.sleep(delay)
+                    # Shutdown can start while a query waits for its gap.
+                    # Log cancellation separately; no serial write was tried.
+                    if self._medical_closing and label != 'velocity':
+                        record('TX_CANCELLED_SHUTDOWN', label=label)
+                        return False
                     record('TX_BEGIN', label=label, hex=binascii.hexlify(output).decode('ascii'))
                     self.serial.authorized = True
                     try:
-                        result = super(Diagnostic, self)._medical_write(output, label)
+                        result = legacy.BaseControl._medical_write(self, output, label)
                     finally:
                         self.serial.authorized = False
                     # Estimate on-wire time; this gap is mitigation, not an MCU acknowledgement.
@@ -233,8 +239,8 @@ def bench(args):
            duration=args.duration, floor_motion_permitted=False)
     control = None
     try:
-        control = Diagnostic()
         deadline = now() + args.duration
+        control = Diagnostic()
         while not rospy.is_shutdown() and now() < deadline and not control.diag_fault:
             time.sleep(0.05)
         if control.diag_fault:
@@ -243,7 +249,8 @@ def bench(args):
         if control is not None:
             control.medical_shutdown()
         rospy.signal_shutdown('Bench diagnostic finished')
-        record('BENCH_END', startup_completed=control is not None)
+        record('BENCH_END', startup_completed=control is not None,
+               diagnostic_fault=None if control is None else control.diag_fault)
         # Keep flushed audit open until process exit: a read callback may be
         # finishing after shutdown. No report or .lock is removed.
 

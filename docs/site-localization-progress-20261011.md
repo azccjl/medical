@@ -109,4 +109,10 @@ python2 /tmp/medical_supervised_short_pulse_20261011.py
 
 已停止底盘驱动，随后再次从Ubuntu经SSH核对其节点退出、串口无人占用、控制话题消失。网页TF会过期，不能继续自主运动。原JSON、lock、地图和日志保留。独立零速串口诊断候选已准备，Ubuntu离线检查通过，尚未上传或启动。用户明确当前不方便架空、要求保持底盘停止，本轮不启动硬件诊断。以后现场能稳固架空驱动轮、随时断电后再作针对性观测。完整结论、源码风险、命令与下载文件见 [非预期运动调查](uncommanded-motion-investigation-20261011.md)。
 
+### 已接续：架空零速候选观测
+
+用户随后确认稳定架空，授权一次观测并两次要求重做。已完成三次独立30秒零速诊断，第3次现场反馈为“全程没转、没抖，无异常”，1493帧CRC有效里程反馈线速度全部为零，第2/3次无TX策略或写失败。第1次有收尾查询取消被标False的日志分类问题，原记录保留；第2次前已区分取消和实际write失败。首次和第二次未取得现场观察确认。
+
+三次结束底盘诊断退出、串口owner为空，原底盘未重启；不恢复网页导航。仅确认本零速候选在该架空观测中无异常，未证明原意外运动根因。当前等待后续架空零速下的SSH/复制负载对照，再安排运行驱动修补与实测标定。完整命令、候选SHA、文件和限制见 [架空零速结果](zero-only-bench-result-20261011.md)。
+
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
