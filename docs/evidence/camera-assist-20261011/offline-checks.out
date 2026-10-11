@@ -1,0 +1,13 @@
+{
+  "marker_49": true, 
+  "no_motion_topics": true, 
+  "future_amcl_rejected": true, 
+  "future_source_rejected": true, 
+  "marker_0": true, 
+  "no_fusion": true, 
+  "marker_7": true, 
+  "fresh_camera": true, 
+  "marker_1": true, 
+  "stale_source_rejected": true, 
+  "stale_preview_rejected": true
+}

@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "markers": {},
+  "notes": "Fill only after measuring marker centers in the saved map and validating camera-to-base extrinsics. The web page remains observation-only until a separate review enables fusion."
+}

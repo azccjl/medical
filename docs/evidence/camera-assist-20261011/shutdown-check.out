@@ -1,0 +1,9 @@
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.70 
+
+=== ROBOT VIA UBUNTU SSH ===
+{"motion_sent": false, "base_serial_owners": [], "camera_processes": []}
+CAMERA_SHUTDOWN_CONFIRMED_BASE_CLOSED
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE

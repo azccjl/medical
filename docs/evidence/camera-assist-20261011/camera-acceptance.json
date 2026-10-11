@@ -1,0 +1,19 @@
+{
+  "motion_sent": false, 
+  "rate_hz": 5.022130707370575, 
+  "source_stamp": 1791727524.537188, 
+  "frame_id": "medical_astra_rgb_optical_frame", 
+  "qr_messages": 50, 
+  "jpeg_bytes": 50637, 
+  "height": 480, 
+  "width": 640, 
+  "frames": 50, 
+  "last_qr": {
+    "read_only": true, 
+    "frame_id": "medical_astra_rgb_optical_frame", 
+    "task_execution": false, 
+    "observations": [], 
+    "stamp": 1791727524.537188
+  }, 
+  "synthetic_aruco_id0_pass": true
+}

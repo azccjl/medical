@@ -1,0 +1,3 @@
+*.json -text whitespace=-blank-at-eol
+*.out -text whitespace=-blank-at-eol
+*.svg text eol=lf
