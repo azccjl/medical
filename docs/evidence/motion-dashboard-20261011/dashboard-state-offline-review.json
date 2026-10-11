@@ -1,0 +1,12 @@
+{
+  "confirmation_required": true, 
+  "status": "DASHBOARD_OFFLINE_REVIEW_PASSED", 
+  "expired_graph_blocked": true, 
+  "invalid_tokens_blocked": true, 
+  "hardware_opened": false, 
+  "ssh_executed": false, 
+  "foreign_publishers_blocked": true, 
+  "stale_scans_blocked": true, 
+  "ros_imported": false, 
+  "cases": 14
+}

@@ -1,0 +1,10 @@
+{
+  "status": "OFFLINE_REVIEW_PASSED",
+  "recorded_scans": 100,
+  "v4_v5_scan_decisions_identical": true,
+  "all_rejection_counts": {
+    "FRONT_SCAN_EDGE_UNKNOWN": 74,
+    "FRONT_UNKNOWN_GAP_TOO_WIDE": 27
+  },
+  "hardware_opened": false
+}

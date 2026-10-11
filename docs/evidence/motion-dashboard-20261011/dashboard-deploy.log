@@ -1,0 +1,48 @@
+STAGED_HASHES_VERIFIED
+{"status": "OFFLINE_POLICY_CHECK_PASSED", "serial_opened": false, "cases": 12, "ros_imported": false}
+{"status": "OFFLINE_FORWARD_POLICY_PASSED", "cases": 9, "hardware_opened": false}
+{"status": "OFFLINE_SCAN_POLICY_PASSED", "cases": 9, "hardware_opened": false}
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+{"node": "lslidar_driver_node", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/lslidar_driver/lslidar_driver_node"], "event": "ENV_NODE_OK", "package": "lslidar_driver"}
+{"node": "scan_to_scan_filter_chain", "paths": ["/home/EPRobot/robot_ws/devel_medical_lidar/lib/laser_filters/scan_to_scan_filter_chain"], "event": "ENV_NODE_OK", "package": "laser_filters"}
+{"node": "medical_art_racecar.py", "paths": ["/home/EPRobot/robot_ws/src/eprobot_start/script/medical_art_racecar.py"], "event": "ENV_NODE_OK", "package": "eprobot_start"}
+ENV_READY robot ROS_IP=192.168.12.1 ROS_MASTER_URI=http://192.168.12.1:11311 ROBOT_TYPE=UNSET
+('SERIAL_OWNERS', '[]')
+NO_CONTROL_OR_ODOM_PUBLISHERS
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+ROBOT_UPLOAD_HASHES_MATCH_SERIAL_UNOWNED_NO_BASE_START
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+PASSIVE_DASHBOARD_PID=6786
+FILE_UPLOAD_ONLY_NO_BASE_START_NO_MOTION

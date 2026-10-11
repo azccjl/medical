@@ -1,0 +1,12 @@
+medical_scan_report_20261011.py text eol=lf
+medical_ground_straight_pulse_v5_20261011.py text eol=lf
+medical_motion_dashboard_20261011.py text eol=lf
+medical_motion_dashboard_20261011.html text eol=lf
+dashboard-manifest.json text eol=lf
+review_motion_dashboard_offline_20261011.py text eol=lf
+robot_dashboard_upload_preflight.sh text eol=lf
+robot_dashboard_upload_postflight.sh text eol=lf
+vm_dashboard_inventory_20261011.sh text eol=lf
+vm_deploy_motion_dashboard_20261011.sh text eol=lf
+vm_review_and_refresh_dashboard_20261011.sh text eol=lf
+vm_finalize_dashboard_20261011.sh text eol=lf
