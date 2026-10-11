@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1180" viewBox="0 0 1100 1180">
+<rect width="1100" height="1180" fill="#f5f7fa"/>
+<g font-family="Microsoft YaHei,Arial,sans-serif">
+<polygon points="100.00,105.00 955.00,105.00 955.00,960.00 100.00,960.00" fill="#ffffff" stroke="#18232e" stroke-width="5"/>
+<polygon points="527.50,257.00 689.00,257.00 689.00,390.00 527.50,390.00" fill="#cbd1d8" stroke="#18232e" stroke-width="5"/>
+<polygon points="366.00,542.00 527.50,542.00 527.50,675.00 689.00,675.00 689.00,808.00 366.00,808.00" fill="#cbd1d8" stroke="#18232e" stroke-width="5"/>
+<polygon points="100.00,428.00 195.00,428.00 195.00,523.00 100.00,523.00" fill="#fff3d8" stroke="#c58824" stroke-width="3"/>
+<text x="147.50" y="475.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">1</text>
+<polygon points="271.00,523.00 366.00,523.00 366.00,618.00 271.00,618.00" fill="#fff3d8" stroke="#c58824" stroke-width="3"/>
+<text x="318.50" y="570.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">2</text>
+<polygon points="100.00,618.00 195.00,618.00 195.00,713.00 100.00,713.00" fill="#fff3d8" stroke="#c58824" stroke-width="3"/>
+<text x="147.50" y="665.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">3</text>
+<polygon points="271.00,713.00 366.00,713.00 366.00,808.00 271.00,808.00" fill="#fff3d8" stroke="#c58824" stroke-width="3"/>
+<text x="318.50" y="760.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">4</text>
+<polygon points="689.00,352.00 784.00,352.00 784.00,447.00 689.00,447.00" fill="#ecf8f1" stroke="#309966" stroke-width="3"/>
+<text x="736.50" y="399.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">A</text>
+<polygon points="860.00,257.00 955.00,257.00 955.00,352.00 860.00,352.00" fill="#ecf8f1" stroke="#309966" stroke-width="3"/>
+<text x="907.50" y="304.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">B</text>
+<polygon points="860.00,447.00 955.00,447.00 955.00,542.00 860.00,542.00" fill="#ecf8f1" stroke="#309966" stroke-width="3"/>
+<text x="907.50" y="494.50" text-anchor="middle" dominant-baseline="central" font-size="43" fill="#243247">C</text>
+<polyline points="689.00,808.00 689.00,960.00" fill="none" stroke="#7b48bd" stroke-width="6"/>
+<polyline points="366.00,105.00 366.00,257.00" fill="none" stroke="#7b48bd" stroke-width="6"/>
+<text x="806.80" y="880.20" text-anchor="middle" dominant-baseline="central" font-size="24" fill="#7b48bd">识别板一</text>
+<text x="217.80" y="181.00" text-anchor="middle" dominant-baseline="central" font-size="24" fill="#7b48bd">识别板二</text>
+<text x="628.20" y="897.30" text-anchor="middle" dominant-baseline="central" font-size="25" fill="#243247">起点</text>
+<text x="527.50" y="44.20" text-anchor="middle" dominant-baseline="central" font-size="30" fill="#243247">场地整理图 · 4.5 m × 4.5 m</text>
+<text x="527.50" y="1045.50" text-anchor="middle" dominant-baseline="central" font-size="22" fill="#243247">七个方框：窗口区域    紫色线：识别板位置</text>
+<text x="527.50" y="1096.80" text-anchor="middle" dominant-baseline="central" font-size="20" fill="#243247">外墙与挡板均已整理平直 · 位置按规则图估计，待实地标定</text>
+</g>
+</svg>

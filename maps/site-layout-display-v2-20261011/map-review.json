@@ -1,0 +1,30 @@
+{
+  "status": "OFFLINE_GEOMETRY_AND_COORDINATES_CHECKED",
+  "source_map_sha256": "e301b8e583d1e019f88d42bebba92234fba7c3af62a274a46a72904b7f5be88c",
+  "candidate_map_sha256": "93903a951828d76c4f9e763cab1549c9a31ae0749569b0b5afdc80333af64d41",
+  "previous_candidate_sha256": "93903a951828d76c4f9e763cab1549c9a31ae0749569b0b5afdc80333af64d41",
+  "occupancy_unchanged": true,
+  "outer_size_m": [
+    4.5,
+    4.5
+  ],
+  "resolution_m": 0.05,
+  "axis_aligned_edges": 14,
+  "window_labels": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "A",
+    "B",
+    "C"
+  ],
+  "window_size_m": [
+    0.5,
+    0.5
+  ],
+  "recognition_lines": 2,
+  "localization_map": "original SLAM map; not changed",
+  "registration_validated": false,
+  "robot_motion_sent": false
+}

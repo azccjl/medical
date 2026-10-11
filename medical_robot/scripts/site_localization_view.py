@@ -68,22 +68,24 @@ button{padding:9px 12px;border:1px solid #bac6d4;border-radius:7px;background:wh
 .status{padding:12px;background:#fff1cf;border-radius:8px;margin-bottom:16px}.data{line-height:1.9;font-size:14px}.legend{font-size:13px;color:#637389;line-height:1.9}
 @media(max-width:800px){main{flex-direction:column}aside{width:100%}}
 </style><header><h1>医运机器人 · 实时定位</h1><div class="muted">蓝色箭头的小圆心表示后轴参考点，箭头指向车头；橙色圆点表示雷达中心。</div></header>
-<main><section class="map"><button id="raw" class="active" onclick="select('raw')">原始扫描地图</button><button id="structured" onclick="select('structured')">整理后场地图</button>
+<main><section class="map"><button id="raw" onclick="select('raw')">原始扫描地图</button><button id="structured" class="active" onclick="select('structured')">整理后场地图</button>
 <canvas id="c" width="800" height="800"></canvas><div class="legend">蓝色箭头：后轴参考点及车头方向　橙点：雷达中心（参考点前方 13.5 cm）　红点：雷达回波<br>绿色方框 A/B/C：取样　黄色方框 1–4：送样　紫色线：识别区域<br>整理图按规则尺寸生成，窗口及识别区域坐标待实地标定。</div></section>
-<aside><h2>定位状态</h2><div class="status" id="status">正在连接显示服务…</div><div class="data" id="pose">等待位置估计</div><hr><div class="legend">本页用于观察位置和地图对齐。当前阶段需要核对雷达点与墙线、挡板边界是否重合。</div></aside></main>
+<aside><h2>定位状态</h2><div class="status" id="status">正在连接显示服务…</div><div class="data" id="pose">等待位置估计</div><hr><div class="legend" id="mapnote">整理图：墙线以矢量显示，保留 4.5 m × 4.5 m 比例。<br>定位地图：原始扫描图。<br>七个方框和两条识别线是地面标记；站点停车位置与朝向尚未标定。</div></aside></main>
 <script>
-let mode='raw',latest=null;const c=document.getElementById('c'),ctx=c.getContext('2d');
+let mode='structured',latest=null;const c=document.getElementById('c'),ctx=c.getContext('2d');
 function select(k){mode=k;for(let id of ['raw','structured'])document.getElementById(id).classList.toggle('active',id===k);if(latest)draw(latest)}
 function draw(s){let m=s.maps[mode];if(!m)return;ctx.clearRect(0,0,800,800);let scale=Math.min(750/m.width,750/m.height),dx=(800-m.width*scale)/2,dy=(800-m.height*scale)/2;
 let off=document.createElement('canvas');off.width=m.width;off.height=m.height;let o=off.getContext('2d'),im=o.createImageData(m.width,m.height);
 for(let row=0;row<m.height;row++)for(let col=0;col<m.width;col++){let v=m.data[row*m.width+col],i=((m.height-1-row)*m.width+col)*4,g=v<0?205:(v>=65?25:254);im.data[i]=im.data[i+1]=im.data[i+2]=g;im.data[i+3]=255}o.putImageData(im,0,0);ctx.imageSmoothingEnabled=false;ctx.drawImage(off,dx,dy,m.width*scale,m.height*scale);
 const a=m.origin[2]||0,ca=Math.cos(a),sa=Math.sin(a);function point(x,y){let u=x-m.origin[0],v=y-m.origin[1];return [dx+(ca*u+sa*v)/m.resolution*scale,dy+(m.height-(-sa*u+ca*v)/m.resolution)*scale]}
-function region(p,color,fill){ctx.beginPath();p.forEach((v,i)=>{let z=point(v[0],v[1]);i?ctx.lineTo(...z):ctx.moveTo(...z)});if(fill){ctx.closePath();ctx.fillStyle=fill;ctx.fill()}ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.stroke()}
-for(let [k,v]of Object.entries(s.annotations.windows||{})){let b=v.bounds_from_left_top_m,p=[];for(let q of [[b[0],b[1]],[b[2],b[1]],[b[2],b[3]],[b[0],b[3]]])p.push(site(q));let col='ABC'.includes(k)?'#15965f':'#b57a00';region(p,col,'ABC'.includes(k)?'#24b36b22':'#ffb80022');let z=point(...v.center_map_xy_estimate_m);ctx.fillStyle=col;ctx.font='bold 27px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(k,...z)}
-function site(q){let reg=s.annotations.registration;return [m.origin[0]+(reg.left_col+q[0]*20)*m.resolution,m.origin[1]+(m.height-reg.top_row-q[1]*20)*m.resolution]}
+function region(p,color,fill,width=2.5){ctx.beginPath();p.forEach((v,i)=>{let z=point(v[0],v[1]);i?ctx.lineTo(...z):ctx.moveTo(...z)});if(fill){ctx.closePath();ctx.fillStyle=fill;ctx.fill()}ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin='miter';ctx.stroke()}
+let geometry=s.annotations.geometry;if(mode==='structured'&&geometry){ctx.fillStyle='#cdd1d5';ctx.fillRect(dx,dy,m.width*scale,m.height*scale);let wall=geometry.wall_width_m/m.resolution*scale;region(geometry.outer_boundary_map_xy_m,'#192536','#fefefe',wall);for(let poly of geometry.obstacle_polygons_map_xy_m)region(poly,'#192536','#cdd1d5',wall)}
+for(let [k,v]of Object.entries(s.annotations.windows||{})){let b=v.bounds_from_left_top_m,p=v.polygon_map_xy_estimate_m||[[b[0],b[1]],[b[2],b[1]],[b[2],b[3]],[b[0],b[3]]].map(site);let col='ABC'.includes(k)?'#15965f':'#b57a00';region(p,col,'ABC'.includes(k)?'#24b36b22':'#ffb80022');let z=point(...v.center_map_xy_estimate_m);ctx.fillStyle=col;ctx.font='bold 27px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(k,...z)}
+function site(q){let reg=s.annotations.registration,meta=s.annotations.map_metadata||s.maps.structured;let u=reg.left_col*meta.resolution+q[0],v=(meta.height-reg.top_row)*meta.resolution-q[1],a=meta.origin[2]||0;return [meta.origin[0]+Math.cos(a)*u-Math.sin(a)*v,meta.origin[1]+Math.sin(a)*u+Math.cos(a)*v]}
 for(let [k,v]of Object.entries(s.annotations.recognition_boards||{})){region(v.line_map_xy_estimate_m,'#8c48bd');let p=point(...v.line_map_xy_estimate_m[0]);ctx.font='16px Arial';ctx.fillStyle='#8c48bd';ctx.textAlign='left';ctx.fillText(k,p[0]+9,p[1]+22)}
-if(s.pose&&s.pose.available){for(let p of s.scan_points||[]){let z=point(...p);ctx.fillStyle='#ee545488';ctx.fillRect(z[0]-1,z[1]-1,2,2)}let p=s.pose,z=point(p.x,p.y),theta=-(p.yaw-a);let l=s.laser_pose;if(l&&l.fresh&&p.fresh){let q=point(l.x,l.y);ctx.beginPath();ctx.moveTo(...z);ctx.lineTo(...q);ctx.strokeStyle='#e89320';ctx.lineWidth=2;ctx.stroke()}ctx.save();ctx.translate(...z);ctx.rotate(theta);ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(-12,-9);ctx.lineTo(-7,0);ctx.lineTo(-12,9);ctx.closePath();ctx.fillStyle=p.fresh?'#1677df':'#8795a5';ctx.fill();ctx.beginPath();ctx.arc(0,0,3,0,2*Math.PI);ctx.fillStyle='white';ctx.fill();ctx.restore();if(l&&l.fresh&&p.fresh){let q=point(l.x,l.y);ctx.beginPath();ctx.arc(...q,5,0,2*Math.PI);ctx.fillStyle='#ed9117';ctx.fill();ctx.strokeStyle='white';ctx.lineWidth=1.5;ctx.stroke()}}
-document.getElementById('status').textContent=s.status;let p=s.pose;document.getElementById('pose').textContent=p&&p.available?`后轴参考点\nX：${p.x.toFixed(2)} m　Y：${p.y.toFixed(2)} m\n车头角度：${(p.yaw*180/Math.PI).toFixed(1)}°\n位置标准差：${s.uncertainty?Math.max(...s.uncertainty.xy_std_m).toFixed(2)+' m':'等待'}\n航向标准差：${s.uncertainty?s.uncertainty.yaw_std_deg.toFixed(1)+'°':'等待'}`:'小车放回场地并初始化定位后显示';document.getElementById('pose').style.whiteSpace='pre-line'}
+if(s.pose&&s.pose.available){if(s.pose.fresh&&s.laser_pose&&s.laser_pose.fresh)for(let p of s.scan_points||[]){let z=point(...p);ctx.fillStyle='#ee545488';ctx.fillRect(z[0]-1,z[1]-1,2,2)}let p=s.pose,z=point(p.x,p.y),theta=-(p.yaw-a);let l=s.laser_pose;if(l&&l.fresh&&p.fresh){let q=point(l.x,l.y);ctx.beginPath();ctx.moveTo(...z);ctx.lineTo(...q);ctx.strokeStyle='#e89320';ctx.lineWidth=2;ctx.stroke()}ctx.save();ctx.translate(...z);ctx.rotate(theta);ctx.beginPath();ctx.moveTo(18,0);ctx.lineTo(-12,-9);ctx.lineTo(-7,0);ctx.lineTo(-12,9);ctx.closePath();ctx.fillStyle=p.fresh?'#1677df':'#8795a5';ctx.fill();ctx.beginPath();ctx.arc(0,0,3,0,2*Math.PI);ctx.fillStyle='white';ctx.fill();ctx.restore();if(l&&l.fresh&&p.fresh){let q=point(l.x,l.y);ctx.beginPath();ctx.arc(...q,5,0,2*Math.PI);ctx.fillStyle='#ed9117';ctx.fill();ctx.strokeStyle='white';ctx.lineWidth=1.5;ctx.stroke()}}
+ctx.strokeStyle='#334155';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(35,775);ctx.lineTo(35+scale/m.resolution,775);ctx.stroke();ctx.fillStyle='#334155';ctx.font='15px Arial';ctx.textAlign='left';ctx.fillText('1 m',35,762);
+document.getElementById('status').textContent=s.status;let p=s.pose;document.getElementById('pose').textContent=p&&p.available?`后轴参考点\nX：${p.x.toFixed(2)} m　Y：${p.y.toFixed(2)} m\n车头角度：${(p.yaw*180/Math.PI).toFixed(1)}°\n位置标准差：${s.uncertainty?Math.max(...s.uncertainty.xy_std_m).toFixed(2)+' m':'等待'}\n航向标准差：${s.uncertainty?s.uncertainty.yaw_std_deg.toFixed(1)+'°':'等待'}`:'暂无有效实时位姿；恢复数据并确认定位后显示';document.getElementById('pose').style.whiteSpace='pre-line'}
 async function tick(){try{let r=await fetch('/api/state');if(!r.ok)throw Error();latest=await r.json();draw(latest)}catch(e){document.getElementById('status').textContent='显示服务已断开'}setTimeout(tick,250)}tick();
 </script></html>'''
 
@@ -106,7 +108,8 @@ class View(object):
 
     def snapshot(self):
         with self.lock:
-            status = u'等待小车放回场地并初始化定位'
+            status = (u'定位数据已过期 · 等待恢复底盘数据和核对定位'
+                      if self.initialized else u'等待小车放回场地并初始化定位')
             p = dict(self.pose) if self.pose else None
             laser = dict(self.laser_pose) if self.laser_pose else None
             if laser:
