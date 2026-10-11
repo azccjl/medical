@@ -121,4 +121,12 @@ python2 /tmp/medical_supervised_short_pulse_20261011.py
 
 新独立受控架空脉冲候选允许内部+0.10m/s、最多0.30秒，禁用主机信息、保留审计和原4秒严格停车窗口。用户确认架空并授权，实际执行一次并按其要求重复一次。第二次用户确认“两侧一起前转并停住，无异常”，5帧正速、停车窗口201帧/4.0016秒，退出0、串口owner空。原驱动未覆盖；仍不是地面距离/转向/导航验收。当前下一步为场地摆放、重新定位和最短地面闭环验证，详见 [本阶段结果](upload-and-supported-pulse-progress-20261011.md)。
 
+### 最新断点：落地静止定位已恢复并完成限时收尾
+
+用户确认落地、前方约1m，以及起点黑线、朝右、车头在线、充电器已拔掉。新零速候选恢复 odom/TF；启动前时间检查拒绝，随后只将 VM 时钟向前对齐约0.248秒，车端时间未改。v2 的持续窗口立即退出导致一次仅角速度超限后停止，949帧线速度均0，用户确认车未动；原证据保留。
+
+v3 使用原停车门限与4秒窗口，角速度超限后只零速等待新窗口，不允许行驶。重新初始化 AMCL 后，参考点约(-0.1486,-0.0265)m、航向-0.375°，用户确认网页位置方向符合实车、车体和车轮未动。120秒整体观测退出0、串口owner空；5995帧线速度均0，7098发送帧均零速/查询，最终202帧/4.0135秒严格停车通过。四次角速度窗口重置保留，不宣称全时段停车证据连续。
+
+底盘现已停止，TF随后过期；没有新的地面正速动作或导航目标。下一阶段准备地面适用的最短直行与实测标定，再做转向和短段闭环；运动前须预告。完整命令、结果和下载见 [落地静止定位结果](zero-only-site-localization-result-20261011.md)。
+
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
