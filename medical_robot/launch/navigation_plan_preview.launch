@@ -1,0 +1,23 @@
+<launch>
+  <!-- Existing map_server and AMCL must remain running. No hardware starts. -->
+  <!-- Preview output has no bridge to the physical base command topic. -->
+  <node pkg="move_base" type="move_base" name="medical_navigation_preview" output="screen">
+    <rosparam file="$(find medical_robot)/config/navigation/costmap_common.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find medical_robot)/config/navigation/costmap_common.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find medical_robot)/config/navigation/global_costmap.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find medical_robot)/config/navigation/local_costmap.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find medical_robot)/config/navigation/teb_local_planner.yaml" command="load" />
+    <param name="base_global_planner" value="navfn/NavfnROS" />
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <param name="recovery_behavior_enabled" value="false" />
+    <param name="clearing_rotation_allowed" value="false" />
+    <param name="controller_frequency" value="10.0" />
+    <remap from="cmd_vel" to="/medical_nav_preview_cmd_vel" />
+    <remap from="move_base_simple/goal" to="/medical_navigation_preview/simple_goal" />
+    <remap from="move_base/goal" to="/medical_preview_action/goal" />
+    <remap from="move_base/cancel" to="/medical_preview_action/cancel" />
+    <remap from="move_base/status" to="/medical_preview_action/status" />
+    <remap from="move_base/feedback" to="/medical_preview_action/feedback" />
+    <remap from="move_base/result" to="/medical_preview_action/result" />
+  </node>
+</launch>

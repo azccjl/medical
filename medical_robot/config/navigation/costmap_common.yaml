@@ -1,0 +1,15 @@
+# 2026-10-07 measured body bounds relative to the rear axle reference.
+# Physical model/odometry reference consistency still requires motion validation.
+footprint: [[0.245, 0.11], [0.245, -0.11], [-0.100, -0.11], [-0.100, 0.11]]
+obstacle_layer:
+  obstacle_range: 3.0
+  raytrace_range: 4.0
+  observation_sources: laser_scan_sensor
+  laser_scan_sensor:
+    sensor_frame: base_laser_link
+    data_type: LaserScan
+    topic: /medical_slam_scan
+    marking: true
+    clearing: true
+inflation_layer:
+  inflation_radius: 0.20

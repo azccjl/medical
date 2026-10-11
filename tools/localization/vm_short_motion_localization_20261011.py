@@ -8,6 +8,11 @@ from geometry_msgs.msg import Twist, PoseWithCovarianceStamped
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
 
+# Historical evidence source only. The live driver clamps 0.05 to 0.10 m/s;
+# the old wall-time stop check is weaker than the established StopWindow.
+# A new reviewed pulse must replace this executable before any further motion.
+raise RuntimeError('DISABLED_AFTER_SPEED_CLAMP_AND_STOP_CHECK_REVIEW_NO_COMMANDS_SENT')
+
 OUT = '/home/ncut/medical_localization_assets_20261011/short-motion-localization-20261011.json'
 LOCK = OUT + '.lock'
 TOPIC = '/medical_ground_cmd_vel'
@@ -142,7 +147,6 @@ finally:
         report['commands'] = commands; report['odom'] = rows; report['amcl'] = amcl; report['scans'] = scans
     report['ended_wall'] = time.time()
     with open(OUT, 'w') as handle: json.dump(report, handle, indent=2, allow_nan=False)
-    try: os.unlink(LOCK)
-    except OSError: pass
+    # Keep the execution lock as evidence and to prevent automatic repetition.
     rospy.signal_shutdown('single supervised short motion complete')
 print(json.dumps(dict(status=report['status'], errors=errors, odom=len(rows), amcl=len(amcl), scans=len(scans))))

@@ -1,0 +1,33 @@
+TebLocalPlannerROS:
+  odom_topic: /odom
+  map_frame: map
+  teb_autosize: true
+  dt_ref: 0.3
+  dt_hysteresis: 0.1
+  max_global_plan_lookahead_dist: 2.0
+  feasibility_check_no_poses: 5
+  max_vel_x: 0.18
+  max_vel_x_backwards: 0.05
+  max_vel_theta: 0.45
+  acc_lim_x: 0.25
+  acc_lim_theta: 0.5
+  penalty_epsilon: 0.01
+  min_turning_radius: 0.45
+  wheelbase: 0.17
+  cmd_angle_instead_rotvel: false
+  # Measured bounds; minimum turning radius above is still provisional.
+  footprint_model:
+    type: "polygon"
+    vertices: [[0.245, 0.11], [0.245, -0.11], [-0.100, -0.11], [-0.100, 0.11]]
+  xy_goal_tolerance: 0.10
+  yaw_goal_tolerance: 0.12
+  free_goal_vel: false
+  min_obstacle_dist: 0.20
+  include_costmap_obstacles: true
+  inflation_dist: 0.25
+  weight_obstacle: 50
+  weight_optimaltime: 1
+  weight_kinematics_nh: 1000
+  weight_kinematics_forward_drive: 10
+  weight_kinematics_turning_radius: 100
+  enable_homotopy_class_planning: false

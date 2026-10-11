@@ -55,4 +55,40 @@ roslaunch medical_robot site_localization_observe.launch \
 
 根因是车端候选底盘源码 `medical_art_racecar_heading_v2_candidate.py` 的 `_medical_raw_cmdCB`：当 `trans_x` 为正且小于 `0.1` 时，代码将其改为 `0.1`；负速度也有相同下限。因此本次发送的 `0.05` 被底盘转换成 `0.1`，不能用低于 0.1 的命令实现更慢速度。后续自主运动必须先按这一规则重新设计脉冲时长，并单独标定“命令速度—实际位移”；在完成前不再发送运动命令。
 
+## 搬回起点后的恢复与规划预览
+
+用户随后将小车搬回起点，再次明确车头朝右、车体最前端对齐识别板一旁黑线、拔掉充电器并停稳。本阶段没有发送行驶命令。
+
+采用此前实测后轴到车头 0.245 m，更新粗略初始位置为 (-0.15144,-0.026359,0)。第一次发布存在 ROS 连接时序问题：AMCL 仍保持旧位置，该 JSON 的 `REINITIALIZED_NO_MOTION` 不能作为成功恢复的证明；原文件保留。修补为等待包括 AMCL 在内的初始位置订阅连接、锁存消息，并校验新的定位结果接近种子后，第二次恢复成功。日志包含显示节点在发布者退出期间的连接警告；AMCL 新结果和网页状态已独立核对。
+
+第二次末位姿约 (-0.210,-0.026)，航向 -2.27°。另做仅订阅的停车收尾，取得 202 帧、4.017 s 的连续严格窗口，最大允许速度仍为 0.002，单帧间隔不超过 0.2 s。收尾位姿约 (-0.175,-0.028)，航向 -3.22°，轴向位置标准差约 0.126/0.057 m，航向标准差约 5.64°。无行驶发布者。位姿修正不是车体实测移动。
+
+已将导航 footprint 和 TEB footprint 改成已有实测边界 `(0.245,0.11),(0.245,-0.11),(-0.100,-0.11),(-0.100,0.11)`；0.45 m 配置转弯半径仍是暂定值。只部署配置，未启用实体控制。
+
+离线生成带圆弧的外圈路线预览，状态 `PREVIEW_ONLY_MOTION_DISABLED`，圆弧半径 0.55 m 是候选。原图上沿该路线采样的最小车身障碍净距约 0.040 m；当前定位不确定性下筛查余量不足。雷达端点约94%接近墙格，但562条射线中137条在回波前穿过旧占用格，说明端点贴合不能代替完整定位/地图验收。实际边界仍需核对，不使用人工平滑图抹掉实测障碍以便强行通行。
+
+已运行隔离的 `navigation_plan_preview.launch`：不重复启动 AMCL、底盘、雷达或地图服务，速度输出到没有订阅者的 `/medical_nav_preview_cmd_vel`，动作接口也单独重映射。只调用 `GetPlan` 服务，捕获5条预览路径，未发送导航目标。预览结束后关闭规划节点，保留网页、AMCL、雷达与底盘观察输入；`/medical_ground_cmd_vel` 发布者仍为 None。Navfn 路径不是 Ackermann 转向可行性验收。
+
+旧 `vm_short_motion_localization_20261011.py` 已禁止执行：其 0.05 m/s 命令被提升，且其停车检查缺少原严格窗口的完整时序要求，不能将旧报告名称当作严格停车证明。旧代码曾删除它自己的执行锁；本阶段不伪造旧锁，也不删除任何现存 JSON/lock。新脚本使用原 `StopWindow`、单调计时和永久保留锁。
+
+下一次运动候选为 `medical_supervised_short_pulse_20261011.py`，复用已核对 SHA 的车端安全通道与严格停车窗口。命令为 +0.10 m/s、最多0.50 s，里程计位移达到0.08 m提前停发；有驱动超时、独立定时零速保护、异常收尾、雷达通道与控制发布者检查。默认不执行，只有 `--execute --clear-floor --power-stop-confirmed` 才进入运行。尚未执行；预计实际5–15 cm只是观察预期，不能当真实距离保证。暂不改车端速度下限，不按一次约60 cm观察直接修改里程计比例。
+
+### 离线可用的 Ubuntu 命令（本轮已执行过，不自动重复）
+
+```bash
+source /opt/ros/melodic/setup.bash
+source /home/ncut/medical_ws/devel/setup.bash
+export ROS_MASTER_URI=http://192.168.12.1:11311
+export ROS_IP=$(ip -4 route get 192.168.12.1 | sed -n 's/.* src \([^ ]*\).*/\1/p')
+unset ROS_HOSTNAME
+# 下面只读检查，不发车；已经保存的采集文件拒绝覆盖。
+rostopic info /medical_ground_cmd_vel
+rosnode list
+python2 /tmp/medical_supervised_short_pulse_20261011.py
+```
+
+预期：底盘控制话题 `Publishers: None`，节点保留 AMCL/map_server/网页/硬件输入；候选程序打印 `PREPARED_ONLY_NO_ROS_COMMANDS` 并以拒绝执行的返回码退出。文件复制和默认调用不启动运动。
+
+下载目录 `D:/BaiduNetdiskDownload/F1/medical-localization-20261011/`：`site-reinitialize.log`、`site-reinitialize-v2.log`、两版 `site-reinitialized-after-relocation*.json`、`site-final-stop-after-reset-20261011.json`、`site-final-stop.log`、`outer-loop-final-stop-review/outer-loop-preview.png/json`、两版 `navigation-preview*.log` 与 `navigation-plan-preview*.json`、`plan-preview-finish.log`、`short-pulse-prepare.log`。原报告和地图保留。
+
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
