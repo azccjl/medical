@@ -1,0 +1,28 @@
+<launch>
+  <!-- Sensors must already be running. This launch contains no motion controller. -->
+  <arg name="raw_map" />
+  <arg name="structured_map" />
+  <arg name="annotations" />
+  <arg name="localization_map" default="$(arg raw_map)" />
+  <arg name="port" default="8080" />
+  <node pkg="map_server" type="map_server" name="medical_map_server" args="$(arg localization_map)" required="true" output="screen" />
+  <node pkg="amcl" type="amcl" name="amcl" required="true" output="screen">
+    <param name="base_frame_id" value="base_footprint" />
+    <param name="odom_frame_id" value="odom" />
+    <param name="global_frame_id" value="map" />
+    <param name="odom_model_type" value="diff-corrected" />
+    <param name="min_particles" value="500" />
+    <param name="max_particles" value="2000" />
+    <param name="laser_model_type" value="likelihood_field" />
+    <param name="laser_max_beams" value="90" />
+    <param name="laser_max_range" value="6.0" />
+    <param name="update_min_d" value="0.03" />
+    <param name="update_min_a" value="0.03" />
+    <param name="transform_tolerance" value="0.2" />
+    <param name="gui_publish_rate" value="5.0" />
+    <param name="save_pose_rate" value="-1.0" />
+    <remap from="scan" to="/medical_slam_scan" />
+  </node>
+  <node pkg="medical_robot" type="site_localization_view.py" name="medical_site_localization_view" output="screen"
+    args="--raw-map $(arg raw_map) --structured-map $(arg structured_map) --annotations $(arg annotations) --port $(arg port)" />
+</launch>

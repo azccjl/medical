@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "FIELD_VALIDATION_REQUIRED",
+  "driver_sha256": "d671e564242b9058d2ab4fc6fd7d2b64dfa5406c49618e1715fba176f77efce1",
+  "map_pgm_sha256": null,
+  "measured_min_turn_radius_m": null,
+  "measured_min_reliable_speed_m_s": null,
+  "measured_max_stop_distance_m": null,
+  "navigation_speed_limit_m_s": 0.12,
+  "command_timeout_s": 0.20,
+  "checks": {
+    "map_alignment": {"passed": false, "evidence": null},
+    "distance_scale": {"passed": false, "evidence": null},
+    "low_speed_response": {"passed": false, "evidence": null},
+    "left_right_turns": {"passed": false, "evidence": null},
+    "watchdog_and_stop": {"passed": false, "evidence": null},
+    "localization_in_motion": {"passed": false, "evidence": null},
+    "command_gate_bench": {"passed": false, "evidence": null}
+  },
+  "note": "No software-only review can mark these physical checks passed. This file is a template, not navigation authorization."
+}

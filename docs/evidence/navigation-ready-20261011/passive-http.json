@@ -1,0 +1,45 @@
+{
+  "status": "PASSIVE_HTTP_REVIEW_PASSED",
+  "job": null,
+  "downloaded_route_url": "/api/routes/dc283535a24040bb80f1f8d4bec71d01.json",
+  "motion_enabled": false,
+  "length_m": 12.262311353293178,
+  "physical_motion_sent": false,
+  "checks": [
+    {
+      "status": 200,
+      "path": "/api/preview",
+      "error": null
+    },
+    {
+      "status": 200,
+      "path": "/api/save",
+      "error": null
+    },
+    {
+      "status": 400,
+      "path": "/api/start",
+      "error": "FIELD_ACCEPTANCE_REQUIRED_NO_GOALS_SENT"
+    },
+    {
+      "status": 400,
+      "path": "/api/pause",
+      "error": "FIELD_ACCEPTANCE_REQUIRED_NO_GOALS_SENT"
+    },
+    {
+      "status": 400,
+      "path": "/api/resume",
+      "error": "FIELD_ACCEPTANCE_REQUIRED_NO_GOALS_SENT"
+    },
+    {
+      "status": 400,
+      "path": "/api/cancel",
+      "error": "FIELD_ACCEPTANCE_REQUIRED_NO_GOALS_SENT"
+    },
+    {
+      "status": 403,
+      "path": "/api/preview",
+      "error": "ORIGIN_OR_TOKEN_INVALID"
+    }
+  ]
+}

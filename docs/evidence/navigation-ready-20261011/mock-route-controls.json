@@ -1,0 +1,61 @@
+{
+  "status": "MOCK_ROUTE_CONTROL_PASSED",
+  "calibration_fixture": "IN_MEMORY_ONLY_NOT_FIELD_EVIDENCE",
+  "cases": [
+    {
+      "events": [
+        "GOAL",
+        "SEGMENT_SUCCEEDED",
+        "GOAL",
+        "SEGMENT_SUCCEEDED",
+        "ROUTE_GOALS_SUCCEEDED_AWAITING_PHYSICAL_STOP",
+        "GOALS_CANCELLED_ON_EXIT"
+      ],
+      "error": null,
+      "mode": "normal",
+      "counters": {
+        "cancelled": 1,
+        "paused": false,
+        "ticks": 2,
+        "sent": 2
+      }
+    },
+    {
+      "events": [
+        "GOAL",
+        "PAUSED",
+        "RESUMED",
+        "SEGMENT_SUCCEEDED",
+        "GOAL",
+        "SEGMENT_SUCCEEDED",
+        "ROUTE_GOALS_SUCCEEDED_AWAITING_PHYSICAL_STOP",
+        "GOALS_CANCELLED_ON_EXIT"
+      ],
+      "error": null,
+      "mode": "pause_resume",
+      "counters": {
+        "cancelled": 2,
+        "paused": true,
+        "ticks": 3,
+        "sent": 3
+      }
+    },
+    {
+      "events": [
+        "GOAL",
+        "ROUTE_ABORT",
+        "GOALS_CANCELLED_ON_EXIT"
+      ],
+      "error": "OPERATOR_CANCELLED",
+      "mode": "cancel",
+      "counters": {
+        "cancelled": 1,
+        "paused": false,
+        "ticks": 1,
+        "sent": 1
+      }
+    }
+  ],
+  "ros_master_connected": false,
+  "physical_motion_sent": false
+}

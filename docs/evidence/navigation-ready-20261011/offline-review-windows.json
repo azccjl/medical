@@ -1,0 +1,51 @@
+{
+  "status": "PRE_NAVIGATION_SOFTWARE_REVIEW_PASSED",
+  "checks": 50,
+  "motion_sent": false,
+  "ros_imported": false,
+  "field_acceptance": false,
+  "outer_candidate": {
+    "length_m": 12.262311353293052,
+    "min_turn_radius_m": 0.75,
+    "samples": 823,
+    "screens": {
+      "raw": {
+        "passed": true,
+        "failed_samples": 0,
+        "first_failures": [],
+        "padding_m": 0.1,
+        "footprint": [
+          [
+            -0.1,
+            -0.11
+          ],
+          [
+            0.245,
+            0.11
+          ]
+        ],
+        "unknown_is_blocked": true,
+        "cell_diagonal_and_sample_motion_reserved": true
+      },
+      "structured": {
+        "passed": true,
+        "failed_samples": 0,
+        "first_failures": [],
+        "padding_m": 0.1,
+        "footprint": [
+          [
+            -0.1,
+            -0.11
+          ],
+          [
+            0.245,
+            0.11
+          ]
+        ],
+        "unknown_is_blocked": true,
+        "cell_diagonal_and_sample_motion_reserved": true
+      }
+    }
+  },
+  "note": "Synthetic calibration fixture used only in memory, never saved as approval."
+}

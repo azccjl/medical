@@ -1,0 +1,14 @@
+{"status": "FINAL_PASSIVE_STATE_CONFIRMED", "short_pulse_job": null, "navigation_enabled": false, "physical_motion_sent": false, "source_sha256": {"navigation_command_gate.py": "de52e12f2cfdd230d36bbecd6cbd57a9e28d87dac0c3bd6c5499530d27a2f73b", "navigation_policy.py": "dbc040064eb31b88cc20b2793d9730b8b5c84f7bd0046d0f462620189d0f94a7", "route_workbench.html": "358060cf62d8c6b2ff46e96c2cd89e766a4ca0b86a4e2d785d0199656e814a2f", "navigation_scan_guard.py": "77e57a99b6d5b7df346beceb27f1d34f039bcc83ca5eeee2fdaec81db2fb5b6f", "navigation_audited_base.py": "c85b650175334bb2eccc3980f84d8b9c2a9234c258ebf2576d1baf5252e63a4f", "route_workbench.py": "6ed183729f6f806b5bd3de458192ad1e7b42170283ebd7607aca7ca91d7e94cc", "route_action_runner.py": "261f796e2e5cdc82f70899065061bf225271c80862525b5218fa23bbe5570c1c", "route_geometry.py": "410d3c8ad7695303fdea6660bba9b7591777749def153771382c288f15e3fcff"}, "candidate_processes_running": [], "isolated_master_closed": true, "route_job": null}
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71
+
+=== ROBOT VIA UBUNTU SSH ===
+{"status": "PREPARED_ONLY", "serial_opened": false, "ros_imported": false, "errors": ["FIELD_ACCEPTANCE_NOT_COMPLETE", "FIELD_CHECK_REQUIRED_map_alignment", "FIELD_CHECK_REQUIRED_distance_scale", "FIELD_CHECK_REQUIRED_low_speed_response", "FIELD_CHECK_REQUIRED_left_right_turns", "FIELD_CHECK_REQUIRED_watchdog_and_stop", "FIELD_CHECK_REQUIRED_localization_in_motion", "FIELD_CHECK_REQUIRED_command_gate_bench", "INVALID_CALIBRATION_measured_min_turn_radius_m", "INVALID_CALIBRATION_measured_min_reliable_speed_m_s", "INVALID_CALIBRATION_measured_max_stop_distance_m", "MAP_IDENTITY_CHANGED"]}
+('STAGED_SHA256', 'navigation_audited_base.py', 'c85b650175334bb2eccc3980f84d8b9c2a9234c258ebf2576d1baf5252e63a4f')
+('STAGED_SHA256', 'navigation_policy.py', 'dbc040064eb31b88cc20b2793d9730b8b5c84f7bd0046d0f462620189d0f94a7')
+('STAGED_SHA256', 'route_geometry.py', '410d3c8ad7695303fdea6660bba9b7591777749def153771382c288f15e3fcff')
+('STAGED_SHA256', 'site_acceptance.template.json', 'd753121a404e290439a486f4acbf430682cc4bb2104ae8080d9266fb76ecde23')
+DEFAULT_NO_ROS_NO_SERIAL_BASE_REMAINS_STOPPED
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE

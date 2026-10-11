@@ -1,0 +1,25 @@
+{
+  "status": "ISOLATED_MOVE_BASE_NAVFN_TEB_LOADED_AND_GETPLAN_PASSED",
+  "sensor_data": "SYNTHETIC_SOFTWARE_FIXTURE_ONLY",
+  "plans": [
+    {
+      "pose_count": 19,
+      "name": "short_straight"
+    },
+    {
+      "pose_count": 159,
+      "name": "upper_right"
+    },
+    {
+      "pose_count": 195,
+      "name": "upper_left"
+    }
+  ],
+  "ros_master": "http://127.0.0.1:11312",
+  "local_planner": "teb_local_planner/TebLocalPlannerROS",
+  "action_goals_sent": 0,
+  "global_planner": "navfn/NavfnROS",
+  "radius": 0.75,
+  "physical_robot_connected": false,
+  "command_output_subscribers": []
+}
