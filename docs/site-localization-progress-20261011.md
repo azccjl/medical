@@ -51,9 +51,9 @@ roslaunch medical_robot site_localization_observe.launch \
 
 用户确认前方至少 1 m 空旷后，执行一次受监督的直行验证。程序先检查控制话题唯一性、雷达通道和静止基线，再向 `/medical_ground_cmd_vel` 发布 `linear.x=0.05 m/s` 持续 4 s，随后发送零速并等待 4 s 严格静止窗口。输出 `short-motion-localization-20261011.json` 状态为 `STOPPED_STATIC_WINDOW_PASSED`，没有错误，控制发布者结束后为 None。
 
-用户现场量得实际移动约 60 cm；程序记录的里程计位移约前进 0.411 m、侧向 -0.071 m，现场测量优先用于判断真实位移。运动没有在文件复制时发生，而是在执行验证程序发送正速度期间发生。
+用户现场量得实际移动约 60 cm；程序记录的里程计位移约前进 0.411 m、侧向 -0.071 m，现场测量优先用于判断真实位移。本次验证主程序确实发送了正速度；仅凭这一程序记录不能排除上传与排查期间另外发生的非预期运动。后续用户已确认另一次排查期间有额外前进，见本文末尾调查断点。
 
-根因是车端候选底盘源码 `medical_art_racecar_heading_v2_candidate.py` 的 `_medical_raw_cmdCB`：当 `trans_x` 为正且小于 `0.1` 时，代码将其改为 `0.1`；负速度也有相同下限。因此本次发送的 `0.05` 被底盘转换成 `0.1`，不能用低于 0.1 的命令实现更慢速度。后续自主运动必须先按这一规则重新设计脉冲时长，并单独标定“命令速度—实际位移”；在完成前不再发送运动命令。
+已确认的一项速度原因是车端候选底盘源码 `medical_art_racecar_heading_v2_candidate.py` 的 `_medical_raw_cmdCB`：当 `trans_x` 为正且小于 `0.1` 时，代码将其改为 `0.1`；负速度也有相同下限。因此本次发送的 `0.05` 被底盘转换成 `0.1`，不能用低于 0.1 的命令实现更慢速度。这不单独解释全部实际距离，也不解释无行驶命令阶段的非预期运动。后续自主运动必须先按这一规则重新设计脉冲时长，并单独标定“命令速度—实际位移”。
 
 ## 搬回起点后的恢复与规划预览
 
@@ -101,6 +101,12 @@ python2 /tmp/medical_supervised_short_pulse_20261011.py
 
 雷达通道初始最小前向坐标（相对后轴）约1.220 m。里程计固定 odom 坐标变化约 (+0.0343,-0.0243) m，odom参考系与当前地图朝向不同，不能将固定轴的dy直接当作跑偏。此结果仍需结合用户对同一个车体固定点量得的实际距离、停车与方向判断；暂不自动继续转弯或整圈。
 
-下载新增：`medical-supervised-short-pulse-20261011.json`、`medical-supervised-short-pulse-v2-20261011.json`（均零行驶命令拒绝）、`medical-supervised-short-pulse-v3-20261011.json`、对应三版 `supervised-short-pulse-execute*.log`、`base-log-before-pulse-review.log`、`handshake-trace.log`、`short-pulse-final-view-v3.json`。断点：等待这次真实短距动作的现场量距与停车反馈。
+下载新增：`medical-supervised-short-pulse-20261011.json`、`medical-supervised-short-pulse-v2-20261011.json`（均零行驶命令拒绝）、`medical-supervised-short-pulse-v3-20261011.json`、对应三版 `supervised-short-pulse-execute*.log`、`base-log-before-pulse-review.log`、`handshake-trace.log`、`short-pulse-final-view-v3.json`。此处原断点已被下方的非预期运动调查替代。
+
+## 最新断点：非预期运动调查
+
+用户确认两次前进总约30 cm，第二次正式动作约15 cm；第一段发生在“保护检查拒绝”的排查与上传修补期间。正式动作的车体前向 odom 约4.20 cm，与实测不符。历史原始反馈有多次正式动作之外的短暂非零线速度，尚无完整TX证据确认触发者。
+
+已停止底盘驱动，随后再次从Ubuntu经SSH核对其节点退出、串口无人占用、控制话题消失。网页TF会过期，不能继续自主运动。原JSON、lock、地图和日志保留。独立零速串口诊断候选已准备，Ubuntu离线检查通过，尚未上传或启动。用户明确当前不方便架空、要求保持底盘停止，本轮不启动硬件诊断。以后现场能稳固架空驱动轮、随时断电后再作针对性观测。完整结论、源码风险、命令与下载文件见 [非预期运动调查](uncommanded-motion-investigation-20261011.md)。
 
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
