@@ -91,4 +91,16 @@ python2 /tmp/medical_supervised_short_pulse_20261011.py
 
 下载目录 `D:/BaiduNetdiskDownload/F1/medical-localization-20261011/`：`site-reinitialize.log`、`site-reinitialize-v2.log`、两版 `site-reinitialized-after-relocation*.json`、`site-final-stop-after-reset-20261011.json`、`site-final-stop.log`、`outer-loop-final-stop-review/outer-loop-preview.png/json`、两版 `navigation-preview*.log` 与 `navigation-plan-preview*.json`、`plan-preview-finish.log`、`short-pulse-prepare.log`。原报告和地图保留。
 
+### 短脉冲实际执行与断点
+
+用户确认网页位置一致、车前至少1 m空旷并能观察/断电后，开始短脉冲验证。第一版检查到当前驱动日志中的 `Traceback` 而拒绝，`commands=0`。只读下载核对完整错误，实际是 `rospy` 内部的入站 TCPROS 握手未收完即断开，紧随只读停车节点退出；后续串口有效反馈持续，未出现串口写入失败。
+
+新增独立安全辅助候选，只将已经完整核对的六行、0字节 TCPROS 握手断开堆栈精确分类。其他 Traceback、`MEDICAL_SERIAL_WRITE_FAILED` 和 `Invalid Index` 仍拒绝，停车阈值与数据新鲜度未修改。原辅助源码和原驱动未覆盖。中间版遇到 Python2 文件迭代与 `readline()` 混用错误，仍在任何行驶命令前拒绝；改为统一逐行读取后再运行新文件名。三份 JSON 与 lock 保留，实际只执行了一次正速度运动。
+
+成功版本为车端 `medical_supervised_short_pulse_v3_20261011.py`，安全辅助 `medical_bench_pulse_heading_v8_logclassification.py` SHA256 `6d82b66a72b608975ed513e307a56d5f587119d57e9ad723149ab61a64c3085b`。原驱动 SHA 未变。JSON 状态 `STOP_WINDOW_PASSED_AWAITING_PHYSICAL_MEASUREMENT`：6次正速度发布，首末跨度0.449 s，随后24次零速发布；主循环到零速收尾前约0.538 s，不能把发布窗口当作物理停止时间。严格停车窗口201帧、4.003 s，阈值0.002、最大间隔0.2 s，错误与cleanup_errors均为空。退出后 `/medical_ground_cmd_vel` 发布者 None。
+
+雷达通道初始最小前向坐标（相对后轴）约1.220 m。里程计固定 odom 坐标变化约 (+0.0343,-0.0243) m，odom参考系与当前地图朝向不同，不能将固定轴的dy直接当作跑偏。此结果仍需结合用户对同一个车体固定点量得的实际距离、停车与方向判断；暂不自动继续转弯或整圈。
+
+下载新增：`medical-supervised-short-pulse-20261011.json`、`medical-supervised-short-pulse-v2-20261011.json`（均零行驶命令拒绝）、`medical-supervised-short-pulse-v3-20261011.json`、对应三版 `supervised-short-pulse-execute*.log`、`base-log-before-pulse-review.log`、`handshake-trace.log`、`short-pulse-final-view-v3.json`。断点：等待这次真实短距动作的现场量距与停车反馈。
+
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
