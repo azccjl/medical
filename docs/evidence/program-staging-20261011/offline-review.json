@@ -1,0 +1,45 @@
+{
+  "status": "OFFLINE_REVIEW_PASSED",
+  "synthetic_unknown_boundary_refused": true,
+  "scan_replays": [
+    {
+      "status": "REFUSED_UNCHANGED_PROTECTION",
+      "new_error": "FRONT_SCAN_EDGE_UNKNOWN",
+      "old_error": "FRONT_SCAN_EDGE_UNKNOWN",
+      "stamp": 1791701723.7105904
+    },
+    {
+      "status": "REFUSED_UNCHANGED_PROTECTION",
+      "new_error": "FRONT_SCAN_EDGE_UNKNOWN",
+      "old_error": "FRONT_SCAN_EDGE_UNKNOWN",
+      "stamp": 1791701723.9124513
+    },
+    {
+      "status": "REFUSED_UNCHANGED_PROTECTION",
+      "new_error": "FRONT_SCAN_EDGE_UNKNOWN",
+      "old_error": "FRONT_SCAN_EDGE_UNKNOWN",
+      "stamp": 1791701724.0104804
+    }
+  ],
+  "ros_imported": false,
+  "robot_program_executed": false,
+  "source_sha256": "c997fda7951424d7c29053b530809beff8cb6b658abdf7664b55807686dbd71c",
+  "hardware_opened": false,
+  "synthetic_near_obstacle_refused": true,
+  "synthetic_finite_boundary_rounding": {
+    "min_x_from_rear_axle_m": 1.1131475909516713,
+    "central_valid": 80,
+    "required_front_clearance_m": 0.605,
+    "unknown_front_beams": 1,
+    "max_unknown_gap_deg": 0.4999999961268166,
+    "finite_corridor_returns": 49,
+    "central_total": 81,
+    "angle_rounding_tolerance_rad": 8.726646192371846e-07,
+    "unknown_front_angles_deg": [
+      -19.500002637637888
+    ],
+    "half_corridor_width_m": 0.21,
+    "front_clearance_m": 0.8681475909516713
+  },
+  "live_motion_readiness": "NOT_CHECKED_NO_MOTION_AUTHORIZATION"
+}

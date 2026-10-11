@@ -1,0 +1,14 @@
+{
+  "state": "UPLOADED_NOT_STARTED",
+  "date_timezone": "2026-10-11 Asia/Shanghai",
+  "candidate_path": "/home/EPRobot/medical_ground_straight_pulse_v3_20261011.py",
+  "candidate_sha256": "c997fda7951424d7c29053b530809beff8cb6b658abdf7664b55807686dbd71c",
+  "existing_stationary_program": "/home/EPRobot/medical_stationary_localization_v3_20261011.py",
+  "stationary_sha256": "aa06ade75f042131310bf2bad910070728472d68c486ebd3592e206a31b6384d",
+  "scope": "Candidate for one supervised straight calibration pulse; not a full-lap navigation controller.",
+  "no_execute_script_uploaded": true,
+  "no_autostart_configured": true,
+  "floor_motion_authorized": false,
+  "live_motion_readiness": "NOT_CHECKED",
+  "next_step": "Wait for the field to be clear, confirm vehicle pose and restore stationary localization before authorizing any motion."
+}
