@@ -1,0 +1,52 @@
+2026-10-11T18:32:14,191555635+08:00
+active
+=== UBUNTU VM ===
+hostname=ubuntu
+192.168.12.71 
+
+=== ROBOT VIA UBUNTU SSH ===
+active
+enabled
+Reference ID    : C0A80C47 (192.168.12.71)
+Stratum         : 9
+Ref time (UTC)  : Sun Oct 11 10:32:12 2026
+System time     : 0.000003687 seconds slow of NTP time
+Last offset     : +0.000012975 seconds
+RMS offset      : 0.000025550 seconds
+Frequency       : 28.536 ppm fast
+Residual freq   : +0.012 ppm
+Skew            : 2.072 ppm
+Root delay      : 0.001189253 seconds
+Root dispersion : 0.000085593 seconds
+Update interval : 4.0 seconds
+Leap status     : Normal
+210 Number of sources = 1
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current synced, '+' = combined , '-' = not combined,
+| /   '?' = unreachable, 'x' = time may be in error, '~' = time too variable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^* 192.168.12.71                 8   2   377     3   +100us[ +113us] +/-  862us
+inactive
+Restart=on-failure
+RestartUSec=15s
+# Only the Ubuntu VM is the clock authority. No public NTP fallback.
+server 192.168.12.71 iburst minpoll 0 maxpoll 2 maxdelay 0.05
+driftfile /var/lib/chrony/chrony.drift
+logdir /var/log/chrony
+bindcmdaddress 127.0.0.1
+cmdport 323
+# Exit on a large offset; do not propagate a reboot/date error into ROS.
+maxchange 0.5 0 0
+# Slew only. There is deliberately no makestep directive.
+maxslewrate 10000
+('FINAL_BASE_SERIAL_OWNERS', [])
+
+UBUNTU_TO_ROBOT_COMMAND_COMPLETE
+{"field_blockers": ["FIELD_ACCEPTANCE_NOT_COMPLETE", "FIELD_CHECK_REQUIRED_map_alignment", "FIELD_CHECK_REQUIRED_distance_scale", "FIELD_CHECK_REQUIRED_low_speed_response", "FIELD_CHECK_REQUIRED_left_right_turns", "FIELD_CHECK_REQUIRED_watchdog_and_stop", "FIELD_CHECK_REQUIRED_localization_in_motion", "FIELD_CHECK_REQUIRED_command_gate_bench", "INVALID_CALIBRATION_measured_min_turn_radius_m", "INVALID_CALIBRATION_measured_min_reliable_speed_m_s", "INVALID_CALIBRATION_measured_max_stop_distance_m", "MAP_IDENTITY_CHANGED"], "navigation_enabled": false, "localization": {"status": "\u5b9a\u4f4d\u6216\u4f20\u611f\u5668\u6570\u636e\u5df2\u8fc7\u671f", "pose": {"available": true, "ros_age": 589.894653797, "yaw": 0.017759592803018493, "wall_time": 1791714736.246424, "x": -0.22113988989118183, "y": -0.1110271119497531, "fresh": false}, "uncertainty": {"xy_std_m": [0.150462703753192, 0.06279038695455902], "yaw_std_deg": 5.51360010206906}}, "short_pulse_busy": false, "short_pulse_run": null, "route_job": null}
