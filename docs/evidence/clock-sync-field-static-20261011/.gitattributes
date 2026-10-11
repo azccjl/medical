@@ -1,0 +1,3 @@
+# Preserve original evidence bytes and audit SHA256 across Windows/Linux clones.
+* -text -diff
+.gitattributes text diff
