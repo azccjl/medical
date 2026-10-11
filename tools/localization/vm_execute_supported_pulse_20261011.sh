@@ -1,0 +1,12 @@
+#!/bin/bash
+exec >/tmp/medical-supported-wheel-pulse-execute-20261011.log 2>&1
+set -e
+python2 /home/ncut/vm_connection_check_20261009.py --command-file /tmp/robot_zero_bench_preflight_20261011.sh
+python2 /home/ncut/vm_connection_check_20261009.py --upload /tmp/medical_supported_wheel_pulse_20261011.py /home/EPRobot/medical_supported_wheel_pulse_20261011.py
+task_status=0
+python2 /home/ncut/vm_connection_check_20261009.py --command-file /tmp/robot_execute_supported_pulse_20261011.sh || task_status=$?
+echo VM_SUPPORTED_PULSE_EXIT=$task_status
+for filename in medical-supported-wheel-pulse-run-20261011.log medical-supported-wheel-pulse-audit-20261011.jsonl medical-supported-wheel-pulse-audit-20261011.jsonl.lock; do
+    python2 /home/ncut/vm_connection_check_20261009.py --download "/home/EPRobot/$filename" "/home/ncut/medical_localization_assets_20261011/$filename"
+done
+exit "$task_status"

@@ -115,4 +115,10 @@ python2 /tmp/medical_supervised_short_pulse_20261011.py
 
 三次结束底盘诊断退出、串口owner为空，原底盘未重启；不恢复网页导航。仅确认本零速候选在该架空观测中无异常，未证明原意外运动根因。当前等待后续架空零速下的SSH/复制负载对照，再安排运行驱动修补与实测标定。完整命令、候选SHA、文件和限制见 [架空零速结果](zero-only-bench-result-20261011.md)。
 
+### 最新断点：上传对照后接续受控架空前转
+
+已完成运行中的纯文本上传对照。第6次复制结束后有一帧-0.003m/s和角速度峰值，原保护退出，用户确认轮子没转没抖、未碰车/支架；异常原样保留，不归因于用户，也不放宽门限。随后用户要求不继续反复排查、推进下一步，已照此执行。
+
+新独立受控架空脉冲候选允许内部+0.10m/s、最多0.30秒，禁用主机信息、保留审计和原4秒严格停车窗口。用户确认架空并授权，实际执行一次并按其要求重复一次。第二次用户确认“两侧一起前转并停住，无异常”，5帧正速、停车窗口201帧/4.0016秒，退出0、串口owner空。原驱动未覆盖；仍不是地面距离/转向/导航验收。当前下一步为场地摆放、重新定位和最短地面闭环验证，详见 [本阶段结果](upload-and-supported-pulse-progress-20261011.md)。
+
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
