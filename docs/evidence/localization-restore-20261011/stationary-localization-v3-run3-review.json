@@ -1,0 +1,137 @@
+{
+  "status": "ZERO_ONLY_LOCALIZATION_CAPTURE_PASSED_AWAITING_PHYSICAL_OBSERVATION",
+  "audit_sha256": "336882420cd9d15b78c46b12cab32b10ce09b3e4d8592d5f8a15eb49856f8e9d",
+  "hardware_exit_codes": [
+    "0"
+  ],
+  "tx_frames": 7095,
+  "tx_policy_faults": [],
+  "rx_odom_frames": 5994,
+  "rx_nonzero_linear_frames": [],
+  "rx_parser_rejected": 0,
+  "rx_parser_overflows": 0,
+  "max_abs_raw_vx": 0.0,
+  "max_abs_raw_wz": 0.010821041362364843,
+  "ready_stop": {
+    "age_seconds": 0.01029573999949207,
+    "max_gap": 0.2,
+    "note": "Feedback evidence only; physical observation still required",
+    "passed": true,
+    "required_span": 4,
+    "reset_events": [
+      {
+        "reason": "nonstationary",
+        "t": 15383.312379866
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15384.53376605
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15410.252689257
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15427.736354876
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15428.933339376
+      }
+    ],
+    "samples": 201,
+    "span_seconds": 4.010965072000545,
+    "threshold": 0.002
+  },
+  "hardware_final_stop": {
+    "age_seconds": 0.024077500000203145,
+    "max_gap": 0.2,
+    "note": "Feedback evidence only; physical observation still required",
+    "passed": true,
+    "required_span": 4,
+    "reset_events": [
+      {
+        "reason": "nonstationary",
+        "t": 15383.312379866
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15384.53376605
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15410.252689257
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15427.736354876
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15428.933339376
+      }
+    ],
+    "samples": 202,
+    "span_seconds": 4.019130885999402,
+    "threshold": 0.002
+  },
+  "stationary_window_resets": 3,
+  "baseline_stop": {
+    "age_seconds": 0.025344216001030873,
+    "note": "Feedback evidence only; physical observation still required",
+    "samples": 191,
+    "reset_events": [],
+    "span_seconds": 4.022809494999819,
+    "max_gap": 0.2,
+    "passed": true,
+    "threshold": 0.002,
+    "required_span": 4
+  },
+  "final_stop": {
+    "age_seconds": 0.00460911399932229,
+    "note": "Feedback evidence only; physical observation still required",
+    "samples": 196,
+    "reset_events": [
+      {
+        "reason": "gap_or_nonmonotonic",
+        "t": 15446.510157486
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15452.869197985
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15454.100896813
+      }
+    ],
+    "span_seconds": 4.016204696001296,
+    "max_gap": 0.2,
+    "passed": true,
+    "threshold": 0.002,
+    "required_span": 4
+  },
+  "capture_status": "REINITIALIZED_NO_MOTION",
+  "capture_error": null,
+  "captured_pose": {
+    "available": true,
+    "ros_age": -0.12428593700000001,
+    "yaw": 0.007131698731640527,
+    "wall_time": 1791705086.046359,
+    "x": -0.1965579490149256,
+    "y": -0.06970162603189578,
+    "fresh": true
+  },
+  "uncertainty": {
+    "xy_std_m": [
+      0.12686987711595646,
+      0.0578923307750167
+    ],
+    "yaw_std_deg": 5.914870020155579
+  },
+  "amcl_messages": 12,
+  "odom_messages": 1009,
+  "physical_observation": "AWAITING_USER",
+  "limitation": "Finite zero-only capture. Driver closes after deadline; TF subsequently expires. Not ground-motion or navigation acceptance."
+}

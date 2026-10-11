@@ -130,3 +130,9 @@ v3 使用原停车门限与4秒窗口，角速度超限后只零速等待新窗�
 底盘现已停止，TF随后过期；没有新的地面正速动作或导航目标。下一阶段准备地面适用的最短直行与实测标定，再做转向和短段闭环；运动前须预告。完整命令、结果和下载见 [落地静止定位结果](zero-only-site-localization-result-20261011.md)。
 
 本轮下载记录：`medical-localization-20261011/prepare.txt`、`offline-state.json`、`hardware-preflight.txt`、`clock-sync.txt`、`inputs-start.txt`、`localization-start.txt`、`initialization.txt`、`site-initial-localization.json`、`live-state.json`、`alignment-review.json`、`site-convergence.json`、`live-convergence.json`、`localization.log`。原地图、位姿图与既有录包保留。
+
+### 最新补充：地图显示更新后再次恢复起点定位
+
+run2 因严格静止窗口等待未通过，未重设定位，硬件退出1，实车无运动。独立采集器改为 TCP_NODELAY、队列1、基线最长等待60秒，未改变停车门限。run3 重设 AMCL 通过，用户确认位置与车体状态；5994帧原始线速度全0、7095发送帧均零速/查询，最终202帧/4.0191秒严格静止通过，退出0、串口关闭。后轴位姿约(-0.1966,-0.0697)m、航向+0.409°；底盘期限结束后实时定位过期。
+
+没有运行短距脉冲或导航，角速度毛刺和传输间断记录仍保留。完整命令、证据及下一断点见 [再次恢复起点定位](localization-restored-run3-20261011.md)。

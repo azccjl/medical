@@ -1,0 +1,15 @@
+{
+  "run2": {
+    "physical_motion": false,
+    "abnormal_sound_or_steering": false,
+    "operator_reply": "是的,没有问题",
+    "capture_passed": false
+  },
+  "run3": {
+    "physical_motion": false,
+    "map_pose_matches_vehicle": true,
+    "operator_reply": "是的,可以移动了理论上",
+    "software_review_status": "ZERO_ONLY_LOCALIZATION_CAPTURE_PASSED_AWAITING_PHYSICAL_OBSERVATION",
+    "note": "User confirmed the displayed pose and no physical abnormality. The reply is not full-lap navigation acceptance. Candidate ended and base serial closed after 120 seconds."
+  }
+}

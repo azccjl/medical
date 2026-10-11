@@ -1,0 +1,98 @@
+{
+  "status": "REVIEW_REQUIRED",
+  "audit_sha256": "fc876e44e2d421049db4954b9ed016e665b01f17f088ce925f9d736b5e48bceb",
+  "hardware_exit_codes": [
+    "1"
+  ],
+  "tx_frames": 7095,
+  "tx_policy_faults": [
+    {
+      "error": "STRICT_STATIONARY_WINDOW_NEVER_READY",
+      "event": "STATIONARY_LOCALIZATION_ABORT",
+      "mono": 15240.011711599,
+      "wall": 1791704936.45075
+    }
+  ],
+  "rx_odom_frames": 5994,
+  "rx_nonzero_linear_frames": [],
+  "rx_parser_rejected": 0,
+  "rx_parser_overflows": 0,
+  "max_abs_raw_vx": 0.0,
+  "max_abs_raw_wz": 0.013788101090755204,
+  "ready_stop": {
+    "age_seconds": 0.020534833000056096,
+    "max_gap": 0.2,
+    "note": "Feedback evidence only; physical observation still required",
+    "passed": true,
+    "required_span": 4,
+    "reset_events": [
+      {
+        "reason": "nonstationary",
+        "t": 15124.211051946
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15126.404307445
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15129.99191548
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15135.81365281
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15136.350698809
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15139.270697178
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15139.43580027
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15143.353928601
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15150.292772264
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15166.292185125
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15168.294840809
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15215.241923188
+      },
+      {
+        "reason": "nonstationary",
+        "t": 15224.011334276
+      }
+    ],
+    "samples": 201,
+    "span_seconds": 4.003121719999399,
+    "threshold": 0.002
+  },
+  "hardware_final_stop": null,
+  "stationary_window_resets": 6,
+  "baseline_stop": null,
+  "final_stop": null,
+  "capture_status": "INCOMPLETE",
+  "capture_error": "STRICT_STOP_WINDOW_NOT_AVAILABLE",
+  "captured_pose": null,
+  "uncertainty": null,
+  "amcl_messages": 1,
+  "odom_messages": 994,
+  "physical_observation": "AWAITING_USER",
+  "limitation": "Finite zero-only capture. Driver closes after deadline; TF subsequently expires. Not ground-motion or navigation acceptance."
+}
